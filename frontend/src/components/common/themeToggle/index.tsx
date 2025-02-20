@@ -4,11 +4,10 @@ import { useTheme } from "next-themes";
 import { FiSun, FiMoon } from "react-icons/fi";
 type Props = {
   size: string;
-  color: string;
 };
 
-const ToggleTheme = ({ size, color }: Props) => {
-  const [mounted, setMounted] = useState(false);
+const ToggleTheme = ({ size }: Props) => {
+  const [mounted, setMounted] = useState<boolean>(false);
   const { setTheme, resolvedTheme } = useTheme();
   useEffect(() => setMounted(true), []);
 
@@ -16,12 +15,20 @@ const ToggleTheme = ({ size, color }: Props) => {
 
   if (resolvedTheme === "dark") {
     return (
-      <FiSun size={size} color={color} onClick={() => setTheme("light")} />
+      <FiSun
+        size={size}
+        onClick={() => setTheme("light")}
+        className="cursor-pointer icon-color"
+      />
     );
   }
   if (resolvedTheme === "light") {
     return (
-      <FiMoon size={size} color={color} onClick={() => setTheme("dark")} />
+      <FiMoon
+        size={size}
+        onClick={() => setTheme("dark")}
+        className="cursor-pointer icon-color"
+      />
     );
   }
 };

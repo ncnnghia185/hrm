@@ -14,7 +14,7 @@ const LoginSchema = Yup.object().shape({
 type Props = {};
 
 const LoginForm = (props: Props) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   // Show / hide password
   const togglePassword = () => {
     setShowPassword((prev) => !prev);

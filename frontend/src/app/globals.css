@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .custom-scrollbar {
+    @apply [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+  }
+  .bg-color {
+    @apply bg-[#ffffff] dark:bg-[#101828];
+  }
+
+  .hover-bg-icon-color{
+    @apply bg-[#ecf0f1] dark:bg-[#1F2937];
+  }
+
+  .border-color {
+    @apply border-[#ecf0f1] dark:border-[#34495e];
+  }
+
+  .hover-dropdown-color {
+    @apply hover:bg-[#e5e7eb] dark:hover:bg-[#2c3e50];
+  }
+
+  .text-color {
+    @apply text-[#121212] dark:text-[#ffffff];
+  }
+
+  .icon-color{
+    @apply text-[#6B7280] dark:text-[#F3F4F6];
+  }
+}
+
 *,
 *::after,
 *::before {

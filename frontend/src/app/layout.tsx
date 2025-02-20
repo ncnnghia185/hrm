@@ -1,7 +1,9 @@
 "use client";
+import BaseLayout from "@/components/common/layout";
 import "./globals.css";
-import { Providers } from "./provider";
-
+import { ThemeProviders } from "./provider";
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -10,7 +12,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-[#ffffff] dark:bg-[#101828]">
-        <Providers>{children}</Providers>
+        <Provider store={store}>
+          <ThemeProviders>
+            <BaseLayout>{children}</BaseLayout>
+          </ThemeProviders>
+        </Provider>
       </body>
     </html>
   );

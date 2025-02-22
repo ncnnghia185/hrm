@@ -11,7 +11,8 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   // Không áp dụng layout với trang login
-  if (pathname === "/dang-nhap") return <>{children}</>;
+  if (pathname === "/dang-nhap" || pathname === "/quen-mat-khau")
+    return <>{children}</>;
   return (
     <div className="flex h-screen">
       <div className={`hidden lg:flex`}>

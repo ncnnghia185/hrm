@@ -1,10 +1,10 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import { RolePermission } from '../role/role_permission.model';
+import { Employee } from '../employee/employee.model';
 
 @Table({
-    tableName: 'permissions',
+    tableName: 'departments',
 })
-export class Permission extends Model<Permission> {
+export class Department extends Model<Department> {
     @Column({
         type: DataType.STRING(255),
         primaryKey: true,
@@ -37,6 +37,6 @@ export class Permission extends Model<Permission> {
     })
     updated_at!: Date;
 
-    @HasMany(() => RolePermission)
-    rolePermissions!: RolePermission[];
+    @HasMany(() => Employee)
+    employees!: Employee[];
 }

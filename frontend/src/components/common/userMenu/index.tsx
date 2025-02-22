@@ -3,10 +3,10 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   IoChevronDown,
   IoChevronUp,
-  IoSettingsOutline,
   IoHelpCircleOutline,
   IoLogOutOutline,
 } from "react-icons/io5";
+import { RiLockPasswordLine } from "react-icons/ri";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 const UserMenuDropdown = () => {
@@ -78,7 +78,7 @@ const UserMenuDropdown = () => {
               className="flex items-center gap-2 px-4 py-2 hover:hover-dropdown-color hover:rounded-lg cursor-pointer"
               onClick={() => navigateDropdown("/doi-mat-khau")}
             >
-              <IoSettingsOutline size={18} className="text-color" />
+              <RiLockPasswordLine size={18} className="text-color" />
               <span className="text-color font-medium">Đổi mật khẩu</span>
             </li>
             <li className="flex items-center gap-2 px-4 py-2 hover:hover-dropdown-color hover:rounded-lg cursor-pointer">

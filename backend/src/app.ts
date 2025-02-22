@@ -5,6 +5,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import envConfig from "./configs/env.config";
 import { setupSwagger } from "./swagger";
+import initWebRoutes from "./routes";
 // import authRoutes from "./route/auth.route";
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
+initWebRoutes(app)
 app.get("/", (req, res) => {
     res.send(req.protocol + "://" + req.get("host"));
 });

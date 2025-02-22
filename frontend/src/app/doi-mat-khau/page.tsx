@@ -1,8 +1,12 @@
 import React from "react";
 
-type Props = {};
+type Props = {
+  email: string;
+  otp: string;
+  onSuccess: (data: { password: string }) => void;
+};
 
-const ChangePassword = (props: Props) => {
+const ChangePassword = ({ email, otp, onSuccess }: Props) => {
   return <div>ChangePassword</div>;
 };
 

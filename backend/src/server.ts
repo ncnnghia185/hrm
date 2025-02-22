@@ -10,6 +10,7 @@ const io = setupSocket(server)
 server.listen(PORT, async () => {
     try {
         await sequelize.authenticate();
+        await sequelize.sync({ force: false });
         console.log("Connection to PostgreSQL successfully.");
         console.log(`Server is running on http://localhost:${PORT}`);
     } catch (error) {

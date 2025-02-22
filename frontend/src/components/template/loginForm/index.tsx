@@ -1,42 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import ToggleTheme from "@/components/common/themeToggle";
-const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Email không đúng định dạng")
-    .required("Email là bắt buộc"),
-  password: Yup.string().required("Mật khẩu là bắt buộc"),
-});
-
-type Props = {};
-
-const LoginForm = (props: Props) => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  // Show / hide password
-  const togglePassword = () => {
-    setShowPassword((prev) => !prev);
-  };
-
-  // Handle submit form
-  const handleSubmit = (values: { email: string; password: string }) => {
-    console.log("Form Data:", values);
-  };
+import { useLogin } from "./hook/useLogin";
+const LoginForm = () => {
+  const { showPassword, togglePassword, LoginSchema, handleSubmit } =
+    useLogin();
   return (
     <div className="w-full flex items-center justify-center mt-4 relative">
-      <div className="bg-white p-8 border-[1px] rounded-lg sm:shadow-none shadow-lg w-full max-w-md">
+      <div className="bg-color p-8 border-[1px] border-color rounded-lg sm:shadow-none shadow-lg w-full max-w-md">
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={LoginSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, errors }) => (
             <Form>
               <div className="mb-4">
                 <label
-                  className="block text-gray-700 font-semibold"
+                  className="block text-color font-semibold"
                   htmlFor="email"
                 >
                   Email <span className="text-red-500">*</span>
@@ -46,7 +29,7 @@ const LoginForm = (props: Props) => {
                   name="email"
                   id="email"
                   placeholder="info@gmail.com"
-                  className="mt-1 px-4 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="mt-1 px-4 py-2 w-full border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 text-color bg-color"
                 />
                 <ErrorMessage
                   name="email"
@@ -57,7 +40,7 @@ const LoginForm = (props: Props) => {
 
               <div className="mb-4 relative">
                 <label
-                  className="block text-gray-700 font-semibold"
+                  className="block text-color font-semibold"
                   htmlFor="password"
                 >
                   Mật khẩu <span className="text-red-500">*</span>
@@ -67,14 +50,20 @@ const LoginForm = (props: Props) => {
                   name="password"
                   id="password"
                   placeholder="Enter your password"
-                  className="mt-1 px-4 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="mt-1 px-4 py-2 w-full border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 text-color bg-color"
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-3 top-8 flex items-center text-gray-600"
+                  className={`absolute inset-y-0 right-3 flex items-center text-color ${
+                    errors.password ? "top-2" : "top-8"
+                  }`}
                   onClick={togglePassword}
                 >
-                  {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                  {showPassword ? (
+                    <FaRegEye className="text-color" />
+                  ) : (
+                    <FaRegEyeSlash className="text-color" />
+                  )}
                 </button>
                 <ErrorMessage
                   name="password"
@@ -84,11 +73,8 @@ const LoginForm = (props: Props) => {
               </div>
 
               <div className="flex items-center justify-end mb-6">
-                <a
-                  href="/quen-mat-khau"
-                  className="text-blue-500 hover:underline text-sm"
-                >
-                  Quyên mật khẩu?
+                <a href="/quen-mat-khau" className="text-blue-500 text-sm">
+                  Quên mật khẩu?
                 </a>
               </div>
 
@@ -96,7 +82,7 @@ const LoginForm = (props: Props) => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-1/2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+                  className="w-1/2 bg-[#465fff] text-white py-2 rounded-md hover:bg-[#3b54f5] transition duration-300"
                 >
                   Đăng nhập
                 </button>
@@ -106,8 +92,8 @@ const LoginForm = (props: Props) => {
         </Formik>
       </div>
 
-      <div className="flex lg:hidden absolute -bottom-1/3 right-8 w-14 h-14 items-center justify-center rounded-full bg-[#465fff] hover:bg-[#5851e6] cursor-pointer">
-        <ToggleTheme size="24" color="#ecf0f1" />
+      <div className="flex lg:hidden absolute -bottom-1/3 right-8 w-14 h-14 items-center justify-center rounded-full border bg-color hover:hover-bg-icon-color cursor-pointer">
+        <ToggleTheme size="24" />
       </div>
     </div>
   );

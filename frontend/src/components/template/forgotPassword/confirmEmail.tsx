@@ -1,5 +1,5 @@
 "use client";
-import { useConfirmAccountEmail } from "./hook/useConfirmEmail";
+import { useConfirmAccountEmail } from "../../../hooks/forgotPassword/useConfirmEmail";
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 

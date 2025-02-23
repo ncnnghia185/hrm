@@ -6,7 +6,7 @@ export interface CollapseSidebarState {
 }
 
 const initialState: CollapseSidebarState = {
-    isCollapsed: true,
+    isCollapsed: false,
 };
 
 const collapseSidebarSlice = createSlice({

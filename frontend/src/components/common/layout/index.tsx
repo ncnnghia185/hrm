@@ -21,7 +21,7 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
 
       <div className="flex flex-col flex-1">
         <HeaderComponent />
-        <main className="p-4 bg-color">{children}</main>
+        <main className="p-4 bg-color flex-1">{children}</main>
       </div>
     </div>
   );

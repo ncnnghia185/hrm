@@ -1,42 +1,18 @@
 "use client";
-import React, { useState } from "react";
-import { useAppSelector, useAppDispatch } from "@/redux/store";
+import React from "react";
 import Link from "next/link";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import sidebarItems from "@/constant/sidebar/items";
-import { toggleCollapseSidebar } from "@/redux/global/globalSlice";
+import { useSidebar } from "@/hooks/sidebar/useSidebar";
 
 const SidebarComponent = () => {
-  const dispatch = useAppDispatch();
-  const isSidebarCollapsed = useAppSelector(
-    (state) => state.global.isCollapsed
-  );
-
-  const [isHovered, setIsHovered] = useState(false);
-  const [openSubMenus, setOpenSubMenus] = useState<{ [key: number]: boolean }>(
-    {}
-  );
-
-  // hover sidebar
-  const handleMouseEnter = () => {
-    if (isSidebarCollapsed) {
-      setIsHovered(true);
-      dispatch(toggleCollapseSidebar());
-    }
-  };
-
-  // not hover sidebar
-  const handleMouseLeave = () => {
-    if (isHovered) {
-      setIsHovered(false);
-      dispatch(toggleCollapseSidebar());
-    }
-  };
-
-  // toggle show children menus
-  const toggleMenu = (index: number) => {
-    setOpenSubMenus((prev) => ({ ...prev, [index]: !prev[index] }));
-  };
+  const {
+    isSidebarCollapsed,
+    openSubMenus,
+    handleMouseEnter,
+    handleMouseLeave,
+    toggleMenu,
+  } = useSidebar();
 
   return (
     <div
@@ -57,7 +33,7 @@ const SidebarComponent = () => {
         )}
       </div>
       <div className="flex flex-col mt-2 bg-color px-3">
-        <nav className="mb-6 ">
+        <nav className="mb-6">
           <div className="flex flex-col gap-3">
             {sidebarItems.map((item, index) => (
               <div key={index} className="relative bg-color">
@@ -66,19 +42,24 @@ const SidebarComponent = () => {
               ${
                 openSubMenus[index]
                   ? "bg-color text-color"
-                  : "hover:hover-dropdown-color"
+                  : "hover:hover-component-color"
               }`}
                   onClick={() => toggleMenu(index)}
                 >
-                  <div className="flex items-center">
-                    <span className="text-color">
-                      <item.icon size={22} />
-                    </span>
-                    {!isSidebarCollapsed && (
-                      <span className="ml-3 text-sm font-medium transition-opacity duration-300 text-color">
-                        {item.name}
+                  <div>
+                    <Link
+                      href={item.path ? item.path : ""}
+                      className="flex items-center"
+                    >
+                      <span className="text-color">
+                        <item.icon size={22} />
                       </span>
-                    )}
+                      {!isSidebarCollapsed && (
+                        <span className="ml-3 text-sm font-medium transition-opacity duration-300 text-color">
+                          {item.name}
+                        </span>
+                      )}
+                    </Link>
                   </div>
                   {item.children && !isSidebarCollapsed && (
                     <span className="text-sm">
@@ -97,10 +78,10 @@ const SidebarComponent = () => {
                   !isSidebarCollapsed && (
                     <div className="ml-6 bg-color overflow-hidden transition-all duration-300">
                       {item.children.map((child, idx) => (
-                        <ul className="mt-2 space-y-1 " key={idx}>
+                        <ul className="mt-2 space-y-1" key={idx}>
                           <Link
-                            href="#"
-                            className="flex px-4 py-2 hover:hover-dropdown-color transition-all duration-300 rounded-md"
+                            href={child.path}
+                            className="flex px-4 py-2 hover:hover-component-color transition-all duration-300 rounded-md"
                           >
                             <span className="text-color">{child.name}</span>
                           </Link>

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useConfirmOTP } from "./hook/useConfirmOTP";
+import { useConfirmOTP } from "../../../hooks/forgotPassword/useConfirmOTP";
 
 const ConfirmOTP = ({
   email,

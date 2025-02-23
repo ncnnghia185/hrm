@@ -2,7 +2,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { useConfirmNewPassword } from "./hook/useConfirmNewPassword";
+import { useConfirmNewPassword } from "../../../hooks/forgotPassword/useConfirmNewPassword";
 type Props = {
   email: string;
   otp: string;

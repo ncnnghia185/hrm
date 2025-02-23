@@ -1,9 +1,11 @@
 import { IconType } from "react-icons";
-export interface SidebarItemType {
+export type SidebarItemType = {
     name: string;
     icon: IconType;
+    path?: string;
     children?: {
         name: string;
         icon?: IconType;
+        path: string
     }[]
 }

@@ -26,7 +26,7 @@ const HeaderComponent = () => {
         </div>
 
         <div className="hidden lg:flex items-center">
-          <SearchBar />
+          <SearchBar placeholder="Nhập thông tin tìm kiếm ..." />
         </div>
       </div>
 

@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-type Props = {};
+type Props = {
+  placeholder: string;
+};
 
-const SearchBar = (props: Props) => {
+const SearchBar = ({ placeholder }: Props) => {
   const [searchValue, setSearchValue] = useState<string>("");
   // handle search
   const handleSearch = () => {
@@ -13,12 +15,14 @@ const SearchBar = (props: Props) => {
     }
   };
   return (
-    <div className="relative flex items-center w-96 h-10 max-w-md rounded-lg border border-color bg-color p-2 focus-within:shadow-sm focus-within:shadow-blue-100 focus-within:ring-1 focus-within:ring-blue-300">
+    <div
+      className={`relative flex items-center w-72 md:w-96 h-10 max-w-md rounded-lg border border-component-color bg-color p-2 focus-within:shadow-sm focus-within:shadow-blue-100 focus-within:ring-1 focus-within:ring-blue-300`}
+    >
       {/* Input search */}
       <input
         type="text"
         className="w-full border-none bg-transparent outline-none text-color placeholder-[#9CA3AF] pl-4"
-        placeholder="Search or type command..."
+        placeholder={placeholder}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}

@@ -27,7 +27,11 @@
     @apply border-[#ecf0f1] dark:border-[#34495e];
   }
 
-  .hover-dropdown-color {
+  .border-component-color {
+    @apply border-[#95a5a6] dark:border-[#ecf0f1];
+  }
+
+  .hover-component-color {
     @apply hover:bg-[#e5e7eb] dark:hover:bg-[#2c3e50];
   }
 
@@ -35,8 +39,25 @@
     @apply text-[#121212] dark:text-[#ffffff];
   }
 
+  .text-component-color {
+    @apply text-[#34495e] dark:text-[#ecf0f1];
+  }
+  
   .icon-color{
     @apply text-[#6B7280] dark:text-[#F3F4F6];
+  }
+
+  .bg-button-save {
+    @apply bg-[#2ecc71] dark:bg-[#10b981] 
+  }
+  .bg-button-cancel {
+    @apply bg-[#f53649] dark:bg-[#ff4d4d] 
+  }
+  .text-button-save {
+    @apply text-[#ffffff] dark:text-[#ffffff] 
+  }
+  .text-button-cancel {
+    @apply text-[#ffffff] dark:text-[#ffffff] 
   }
 }
 
@@ -52,6 +73,7 @@ body,
 .app {
   height: 100vh;
   width: 100%;
+  min-width: 460px;
   max-width: 100vw;
   overflow-x: hidden;
   overflow-y: auto;

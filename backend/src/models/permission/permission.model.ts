@@ -1,8 +1,9 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { RolePermission } from '../role/role_permission.model';
 
 @Table({
     tableName: 'permissions',
+    timestamps: true
 })
 export class Permission extends Model<Permission> {
     @Column({
@@ -15,6 +16,7 @@ export class Permission extends Model<Permission> {
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        unique: true
     })
     name!: string;
 
@@ -24,18 +26,17 @@ export class Permission extends Model<Permission> {
     })
     description!: string;
 
+    @ForeignKey(() => Permission)
     @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW,
-    })
-    created_at!: Date;
-
-    @Column({
-        type: DataType.DATE,
+        type: DataType.STRING(255),
         allowNull: true,
     })
-    updated_at!: Date;
+    parent_id!: string | null
+    @BelongsTo(() => Permission, { foreignKey: 'parent_id', as: 'parent' })
+    parent!: Permission;
+
+    @HasMany(() => Permission, { foreignKey: 'parent_id', as: 'children' })
+    children!: Permission[];
 
     @HasMany(() => RolePermission)
     rolePermissions!: RolePermission[];

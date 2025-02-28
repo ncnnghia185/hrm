@@ -3,6 +3,7 @@ import { Employee } from '../employee/employee.model';
 
 @Table({
     tableName: 'contract',
+    timestamps: true
 })
 export class Contract extends Model<Contract> {
     @Column({
@@ -36,19 +37,6 @@ export class Contract extends Model<Contract> {
         allowNull: true,
     })
     contract!: string;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW,
-    })
-    created_at!: Date;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-    })
-    updated_at!: Date;
 
     @BelongsTo(() => Employee)
     employee!: Employee;

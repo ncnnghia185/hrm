@@ -21,3 +21,50 @@ export const createEmployeeItems = [
         path: "/nhan-vien/tao-moi-ho-so"
     }
 ]
+
+export const listPermissionItems = [
+    {
+        name: "Nhân sự"
+    },
+    {
+        name: "Danh sách quyền hạn",
+        path: "/cau-hinh/danh-sach-quyen-han"
+    }
+]
+
+export const createPermissionItems = [
+    {
+        name: "Nhân sự"
+    },
+    {
+        name: "Danh sách quyền hạn",
+        path: "/cau-hinh/danh-sach-quyen-han"
+    },
+    {
+        name: "Tạo mới quyền hạn",
+        path: "/cau-hinh/danh-sach-quyen-han/tao-moi-quyen-han"
+    }
+]
+
+export const updatePermissionItems = [
+    {
+        name: "Nhân sự"
+    },
+    {
+        name: "Danh sách quyền hạn",
+        path: "/cau-hinh/danh-sach-quyen-han"
+    },
+    {
+        name: "Cập nhật quyền hạn"
+    }
+]
+
+export const accountAuthorizationItems = [
+    {
+        name: "Nhân sự"
+    },
+    {
+        name: "Phân quyền tài khoản",
+        path: "/cau-hinh/phan-quyen-tai-khoan"
+    }
+]

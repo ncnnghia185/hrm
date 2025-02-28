@@ -3,6 +3,7 @@ import { Employee } from '../employee/employee.model';
 
 @Table({
     tableName: 'position',
+    timestamps: true
 })
 export class Position extends Model<Position> {
     @Column({
@@ -23,19 +24,6 @@ export class Position extends Model<Position> {
         allowNull: true,
     })
     description!: string;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW,
-    })
-    created_at!: Date;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-    })
-    updated_at!: Date;
 
     @HasMany(() => Employee)
     employees!: Employee[];

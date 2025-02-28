@@ -84,7 +84,8 @@ const sidebarItems: SidebarItemType[] = [
         name: "Cấu hình & Cài đặt",
         icon: MdSettings,
         children: [
-            { name: "Quản lý tài khoản & quyền hạn", path: "#" },
+            { name: "Danh sách quyền hạn", path: "/cau-hinh/danh-sach-quyen-han" },
+            { name: "Quản lý tài khoản & quyền hạn", path: "/cau-hinh/phan-quyen-tai-khoan" },
             { name: "Cấu hình công ty", path: "#" },
             { name: "Thông báo & email", path: "#" }
         ]
@@ -93,8 +94,8 @@ const sidebarItems: SidebarItemType[] = [
         name: "Hỗ trợ & Liên hệ",
         icon: MdHelp,
         children: [
-            { name: "Hướng dẫn sử dụng", path: "#" },
-            { name: "Liên hệ bộ phận hỗ trợ", path: "#" }
+            { name: "Hướng dẫn sử dụng", path: "/ho-tro/huong-dan-su-dung" },
+            { name: "Liên hệ bộ phận hỗ trợ", path: "/ho-tro/lien-he-ho-tro" }
         ]
     }
 ];

@@ -4,8 +4,13 @@ import SaveButton from "@/components/common/button/saveButton";
 import ContractInfoComponent from "@/components/template/employee/createEmployee/contractInfo";
 import PersonalInfoComponent from "@/components/template/employee/createEmployee/personalInfo";
 import { createEmployeeItems } from "@/constant/breadCrumb";
+import { Metadata } from "next";
 import React from "react";
 
+export const metadata: Metadata = {
+  title: "Tạo mới hồ sơ",
+  description: "Tạo mới hồ sơ",
+};
 const CreateEmployeeBrief = () => {
   return (
     <div className="w-full h-full flex flex-col gap-3">
@@ -34,7 +39,7 @@ const CreateEmployeeBrief = () => {
 
       {/* Nút Save / Cancel */}
       <div className="w-full flex items-center justify-center gap-3 xl:gap-7">
-        <SaveButton loading={true} />
+        <SaveButton loading={true} onClick={() => {}} />
         <CancelButton />
       </div>
     </div>

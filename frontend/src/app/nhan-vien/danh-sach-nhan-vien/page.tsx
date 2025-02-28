@@ -1,11 +1,14 @@
-"use client";
 import BreadCrumb from "@/components/common/breadcrumb";
 import CreateButton from "@/components/common/button/createButton";
 import SearchBar from "@/components/common/search";
 import FilterAndSort from "@/components/template/employee/filterAndSort/smallScreen";
 import { listEmployeeItems } from "@/constant/breadCrumb";
+import { Metadata } from "next";
 import React from "react";
-
+export const metadata: Metadata = {
+  title: "Danh sách nhân viên",
+  description: "Danh sách nhân viên",
+};
 const ListEmployees = () => {
   return (
     <div className="w-full h-full flex flex-col gap-3">

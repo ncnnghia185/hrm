@@ -6,6 +6,7 @@ import { Contract } from '../contract/contract.model';
 
 @Table({
     tableName: 'employee',
+    timestamps: true
 })
 export class Employee extends Model<Employee> {
     @Column({
@@ -38,18 +39,6 @@ export class Employee extends Model<Employee> {
         allowNull: true,
     })
     gender!: string;
-
-    @Column({
-        type: DataType.DATE,
-        defaultValue: DataType.NOW,
-    })
-    created_at!: Date;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-    })
-    updated_at!: Date;
 
     @ForeignKey(() => Account)
     @Column({

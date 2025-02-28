@@ -1,7 +1,7 @@
 import redis from "../configs/redis.config";
 
 // Set cache with TTL (time to live)
-export const setCache = async (key:string, value:any, ttl:number) => {
+export const setCache = async (key: string, value: any, ttl: number) => {
     try {
         const data = JSON.stringify(value);
         await redis.set(key, data, "EX", ttl);

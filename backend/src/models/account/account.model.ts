@@ -6,7 +6,8 @@ import { RefreshToken } from './refresh_token.model';
 import { FailedLogin } from './failed_login.model';
 
 @Table({
-    tableName: 'account'
+    tableName: 'account',
+    timestamps: true
 })
 export class Account extends Model<Account> {
     @Column({
@@ -35,20 +36,6 @@ export class Account extends Model<Account> {
         defaultValue: false,
     })
     is_locked!: boolean;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW,
-    })
-    created_at!: Date;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-        defaultValue: DataType.NOW,
-    })
-    updated_at!: Date;
 
     @HasOne(() => Employee)
     employee!: Employee;

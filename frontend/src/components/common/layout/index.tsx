@@ -15,7 +15,7 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
     return <>{children}</>;
   return (
     <div className="flex h-screen">
-      <div className={`hidden lg:flex`}>
+      <div className={`hidden xl:flex`}>
         <SidebarComponent />
       </div>
 

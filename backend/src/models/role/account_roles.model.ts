@@ -4,6 +4,7 @@ import { Role } from './role.model';
 
 @Table({
     tableName: 'account_role',
+    timestamps: true
 })
 export class AccountRole extends Model<AccountRole> {
     @Column({
@@ -27,19 +28,6 @@ export class AccountRole extends Model<AccountRole> {
         allowNull: false,
     })
     role_id!: string;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW,
-    })
-    created_at!: Date;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-    })
-    updated_at!: Date;
 
     @BelongsTo(() => Account)
     account!: Account;

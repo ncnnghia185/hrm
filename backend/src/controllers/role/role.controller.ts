@@ -10,13 +10,13 @@ const createNewRole = async (req: Request, res: Response) => {
     try {
         const { id, name } = req.body
         if (!id || !name) {
-            responseHandler(res, false, 400, 2, "Missing required fields")
+            responseHandler(res, false, 400, 2, "Missing required fields", null)
             return
         }
         await RoleServices.createRole(req.body)
-        responseHandler(res, true, 201, 0, "Successfully")
+        responseHandler(res, true, 201, 0, "Successfully", null)
     } catch (error) {
-        responseHandler(res, false, 500, 1, String(error))
+        responseHandler(res, false, 500, 1, String(error), null)
         return
     }
 }
@@ -33,7 +33,7 @@ const getAllRoles = async (req: Request, res: Response) => {
         })
         return
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Server Error")
+        responseHandler(res, false, 500, 1, "Server Error", null)
         return
     }
 }
@@ -44,7 +44,7 @@ const getRoleById = async (req: Request, res: Response) => {
         const { id } = req.params
         const role = await RoleServices.selectRoleById(id)
         if (!role) {
-            responseHandler(res, false, 404, 2, "Role not found")
+            responseHandler(res, false, 404, 2, "Role not found", null)
             return
         }
         res.status(200).json({
@@ -55,7 +55,7 @@ const getRoleById = async (req: Request, res: Response) => {
         })
         return
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Server Error")
+        responseHandler(res, false, 500, 1, "Server Error", null)
         return
     }
 }
@@ -67,17 +67,17 @@ const updateRole = async (req: Request, res: Response) => {
         const { name, description } = req.body
         const role = await checkRoleExists(id);
         if (!role) {
-            return responseHandler(res, false, 404, 2, "Role not found");
+            return responseHandler(res, false, 404, 2, "Role not found", null);
         }
         // Kiểm tra dữ liệu hợp lệ
         if (!name && !description) {
-            return responseHandler(res, false, 400, 3, "Nothing to update");
+            return responseHandler(res, false, 400, 3, "Nothing to update", null);
         }
         await RoleServices.updateRole(id, req.body)
-        return responseHandler(res, true, 201, 0, "Role updated successfully");
+        return responseHandler(res, true, 201, 0, "Role updated successfully", null);
 
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Server Error")
+        responseHandler(res, false, 500, 1, "Server Error", null)
         return
     }
 }
@@ -88,12 +88,12 @@ const deleteRole = async (req: Request, res: Response) => {
         const { id } = req.params
         const role = await checkRoleExists(id);
         if (!role) {
-            return responseHandler(res, false, 404, 2, "Role not found");
+            return responseHandler(res, false, 404, 2, "Role not found", null);
         }
         await RoleServices.deleteRole(id)
-        return responseHandler(res, true, 201, 0, "Role deleted successfully");
+        return responseHandler(res, true, 201, 0, "Role deleted successfully", null);
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Server Error")
+        responseHandler(res, false, 500, 1, "Server Error", null)
         return
     }
 }

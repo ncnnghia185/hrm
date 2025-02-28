@@ -6,13 +6,13 @@ import dotenv from "dotenv";
 import envConfig from "./configs/env.config";
 import { setupSwagger } from "./swagger";
 import initWebRoutes from "./routes";
-// import authRoutes from "./route/auth.route";
 
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));

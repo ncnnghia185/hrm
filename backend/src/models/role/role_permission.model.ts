@@ -4,6 +4,7 @@ import { Permission } from '../permission/permission.model';
 
 @Table({
     tableName: 'role_permission',
+    timestamps: true
 })
 export class RolePermission extends Model<RolePermission> {
     @Column({
@@ -26,19 +27,6 @@ export class RolePermission extends Model<RolePermission> {
         allowNull: false,
     })
     permission_id!: string;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-        defaultValue: DataType.NOW,
-    })
-    created_at!: Date;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-    })
-    updated_at!: Date;
 
     @BelongsTo(() => Role)
     role!: Role;

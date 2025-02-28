@@ -4,6 +4,7 @@ import { RolePermission } from './role_permission.model';
 
 @Table({
     tableName: 'roles',
+    timestamps: true
 })
 export class Role extends Model<Role> {
     @Column({
@@ -24,19 +25,6 @@ export class Role extends Model<Role> {
         allowNull: true,
     })
     description!: string;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-        defaultValue: DataType.NOW,
-    })
-    created_at!: Date;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-    })
-    updated_at!: Date;
 
     @HasMany(() => AccountRole)
     accountRoles!: AccountRole[];

@@ -1,10 +1,17 @@
+"use client";
 import React from "react";
 type Props = {
   loading: boolean;
+  onClick: () => void;
 };
-const SaveButton = ({ loading }: Props) => {
+const SaveButton = ({ loading, onClick }: Props) => {
   return (
-    <button className="h-10 w-36 border border-[#10ac84] hover:bg-[#10ac84] rounded-md bg-button-save flex items-center justify-center gap-3">
+    <button
+      onClick={onClick}
+      disabled={loading}
+      type="submit"
+      className="h-10 w-36 border border-[#10ac84] hover:bg-[#10ac84] rounded-md bg-button-save flex items-center justify-center gap-3"
+    >
       {loading && (
         <div role="status">
           <svg

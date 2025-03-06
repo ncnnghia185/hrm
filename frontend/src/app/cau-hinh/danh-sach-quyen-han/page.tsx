@@ -26,12 +26,12 @@ const PermissionsList = () => {
             label="Thêm quyền"
           />
         </div>
-        <div className="w-[90%] md:w-[95%] h-[1px] border-b"></div>
-        <div className="h-full w-full flex flex-col mt-1">
+        <div className="w-[90%] md:w-[95%] h-[1px] border-b mt-2"></div>
+        <div className="flex-1 h-full w-full flex flex-col mt-2">
           <div className="w-full h-[16%] md:h-[10%]">
             <SearchPermission />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 max-h-full h-full">
             <ListAllPermission />
           </div>
         </div>

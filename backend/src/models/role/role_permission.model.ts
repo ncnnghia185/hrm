@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, PrimaryKey } from 'sequelize-typescript';
 import { Role } from './role.model';
 import { Permission } from '../permission/permission.model';
 
@@ -7,14 +7,9 @@ import { Permission } from '../permission/permission.model';
     timestamps: true
 })
 export class RolePermission extends Model<RolePermission> {
-    @Column({
-        type: DataType.STRING(255),
-        primaryKey: true,
-        allowNull: false,
-    })
-    id!: string;
 
     @ForeignKey(() => Role)
+    @PrimaryKey
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
@@ -22,6 +17,7 @@ export class RolePermission extends Model<RolePermission> {
     role_id!: string;
 
     @ForeignKey(() => Permission)
+    @PrimaryKey
     @Column({
         type: DataType.STRING(255),
         allowNull: false,

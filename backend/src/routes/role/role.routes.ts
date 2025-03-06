@@ -1,61 +1,52 @@
-// import { Router } from "express";
-// import { roleController } from "../../controllers/role/role.controller";
-
-// const router = Router()
-// router.post('/create-role', roleController.createNewRole)
-// router.get('/all-roles', roleController.getAllRoles)
-// router.get("/role/:id", roleController.getRoleById)
-// router.put("/update-role/:id", roleController.updateRole)
-// router.delete("/delete-role/:id", roleController.deleteRole)
-
-// export default router
-
 import { Router } from "express";
 import { roleController } from "../../controllers/role/role.controller";
-import { verifyAccessToken } from "../../middlewares/auth.middleware";
-import { checkRole } from "../../middlewares/role.middleware";
-import { checkPermission } from "../../middlewares/permission.middleware";
+import { authMiddleware } from "../../middlewares/auth.middleware";
+import { roleMiddleware } from "../../middlewares/role.middleware";
+import { permissionMiddleware } from "../../middlewares/permission.middleware";
 
 const router = Router();
 
 router.post(
     '/create-role',
-    // verifyAccessToken,
-    // checkRole(["admin", "hr"]),
-    // checkPermission("create-role"),
+    authMiddleware,
+    roleMiddleware(["admin"]),
+    permissionMiddleware(["create-role"]),
     roleController.createNewRole
 );
 
 router.get(
     '/all-roles',
-    verifyAccessToken,
-    checkRole(["admin", "hr"]),
-    checkPermission("view-roles"),
+    // verifyAccessToken,
+    // checkRole(["admin", "hr"]),
+    // checkPermission("view-roles"),
     roleController.getAllRoles
 );
 
 router.get(
-    "/role/:id",
-    verifyAccessToken,
-    checkRole(["admin", "hr"]),
-    checkPermission("view-role"),
-    roleController.getRoleById
+    "/role/:name",
+    // verifyAccessToken,
+    // checkRole(["admin", "hr"]),
+    // checkPermission("view-role"),
+    roleController.getRoleByName
 );
 
 router.put(
-    "/update-role/:id",
-    verifyAccessToken,
-    checkRole(["admin", "hr"]),
-    checkPermission("update-role"),
+    "/update-role/:name",
+    // verifyAccessToken,
+    // checkRole(["admin", "hr"]),
+    // checkPermission("update-role"),
     roleController.updateRole
 );
 
 router.delete(
-    "/delete-role/:id",
-    verifyAccessToken,
-    checkRole(["admin", "hr"]),
-    checkPermission("delete-role"),
+    "/delete-role/:name",
+    // verifyAccessToken,
+    // checkRole(["admin", "hr"]),
+    // checkPermission("delete-role"),
     roleController.deleteRole
 );
 
+router.post("/assign/:roleId/permissions", roleController.assignPermission)
+router.get("/permission-of-role/:roleId", roleController.getPermissionsByRole)
+router.post("/assign-role-to-user", roleController.assignAccountRole)
 export default router;

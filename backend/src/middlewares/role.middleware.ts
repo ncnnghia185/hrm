@@ -1,25 +1,15 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyAccessToken } from "./auth.middleware";
-import { UserPayload } from "./auth.middleware";
+import { responseHandler } from "../utils/response_handler";
 
-export const checkRole = (allowedRoles: string[]) => {
+export const roleMiddleware = (requiredRoles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
-        verifyAccessToken(req, res, () => {
-            if (!req.user) {
-                return res.status(401).json({
-                    success: false,
-                    message: "User not authenticated",
-                });
-            }
+        const userRoles = req.user?.roles || [];
 
-            if (!allowedRoles.includes(req.user.role)) {
-                return res.status(403).json({
-                    success: false,
-                    message: `Role '${req.user.role}' is not authorized for this action. Required roles: ${allowedRoles.join(", ")}`,
-                });
-            }
+        const hasRequiredRole = requiredRoles.some(role => userRoles.includes(role));
+        if (!hasRequiredRole) {
+            responseHandler(res, false, 403, 1, "Forbidden: You do not have the required role", null)
+        }
 
-            next();
-        });
+        next();
     };
 };

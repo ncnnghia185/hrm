@@ -1,6 +1,7 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany, BelongsToMany } from 'sequelize-typescript';
 import { AccountRole } from './account_roles.model';
 import { RolePermission } from './role_permission.model';
+import { Permission } from '../permission/permission.model';
 
 @Table({
     tableName: 'roles',
@@ -17,6 +18,7 @@ export class Role extends Model<Role> {
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        unique: true
     })
     name!: string;
 
@@ -31,4 +33,6 @@ export class Role extends Model<Role> {
 
     @HasMany(() => RolePermission)
     rolePermissions!: RolePermission[];
+    @BelongsToMany(() => Permission, () => RolePermission)
+    permissions!: Permission[];
 }

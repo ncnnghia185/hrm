@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import configEnv from "../configs/env.config";
+import { responseHandler } from "../utils/response_handler";
 export interface UserPayload {
     id: string;
-    role: string;
+    roles: string[];
     permissions?: string[];
 }
 
@@ -13,46 +14,24 @@ declare module "express" {
     }
 }
 
-/**
- * Middleware to verify access token
- */
-export const verifyAccessToken = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    const token = req.headers.authorization?.startsWith("Bearer ") ? req.headers.authorization.split(" ")[1] : null
+
+    if (!token) {
+        responseHandler(res, false, 401, 401, "Unauthorized: No token provided", null)
+        return
+    }
+
     try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader?.startsWith("Bearer ")) {
-            res.status(401).json({
-                success: false,
-                message: "Required Authentication",
-            });
-            return
-        }
-
-        const token = authHeader.split(" ")[1];
-
-        jwt.verify(
-            token,
-            configEnv.jwt_secret,
-            (err, decoded) => {
-                if (err) {
-                    res.status(401).json({
-                        success: false,
-                        message: "Invalid Token",
-                    });
-                    return
-                }
-                req.user = decoded as UserPayload;
-                next();
-            }
-        );
+        const decoded = jwt.verify(token, configEnv.jwt_secret) as UserPayload;;
+        req.user = {
+            id: decoded.id,
+            roles: Array.isArray(decoded.roles) ? decoded.roles : [decoded.roles],
+            permissions: decoded.permissions || [],
+        };
+        next();
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Server Error",
-            error: error instanceof Error ? error.message : "Unknown error",
-        });
+        responseHandler(res, false, 401, 1, String(error), null)
+        return
     }
 };

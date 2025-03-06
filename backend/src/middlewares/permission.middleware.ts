@@ -1,37 +1,28 @@
+import { Request, Response, NextFunction } from "express";
+import { AppError } from "../utils/custom_error";
+import { AccountRole } from "../models/role/account_roles.model";
+import { RolePermission } from "../models/role/role_permission.model";
+import { responseHandler } from "../utils/response_handler";
 
-import { Request, Response, NextFunction } from 'express';
-import { verifyAccessToken } from './auth.middleware';
+export const permissionMiddleware = (requiredPermissions: string[]) => {
+    return async (req: Request, res: Response, next: NextFunction) => {
+        const accountId = req.user?.id;
 
+        // Lấy danh sách Role của User
+        const userRoles = await AccountRole.findAll({ where: { account_id: accountId } });
+        const roleIds = userRoles.map(ur => ur.role_id);
 
-/**
- * Middleware to check if the user has the required permission
- * @param requiredPermission - The specific permission needed to access the route
- */
-export const checkPermission = (requiredPermission: string) => {
-    return (req: Request, res: Response, next: NextFunction) => {
-        verifyAccessToken(req, res, () => {
-            if (!req.user) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'User not authenticated',
-                });
-            }
+        // Lấy danh sách Permission từ các Role
+        const rolePermissions = await RolePermission.findAll({ where: { role_id: roleIds } });
+        const userPermissions = rolePermissions.map(rp => rp.permission_id);
 
-            // Allow admin to bypass permission checks (optional)
-            if (req.user.role === 'admin') {
-                return next();
-            }
+        // Kiểm tra xem User có quyền cần thiết không
+        const hasPermission = requiredPermissions.some(permission => userPermissions.includes(permission));
 
-            // Check if user has the required permission
-            const userPermissions = req.user.permissions || [];
-            if (!userPermissions.includes(requiredPermission)) {
-                return res.status(403).json({
-                    success: false,
-                    message: `Permission '${requiredPermission}' is required to access this resource`,
-                });
-            }
+        if (!hasPermission) {
+            responseHandler(res, false, 403, 403, "Forbidden: You do not have the required permission", null)
+        }
 
-            next();
-        });
+        next();
     };
 };

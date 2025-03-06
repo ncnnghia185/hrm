@@ -24,7 +24,7 @@ export const createEmployeeItems = [
 
 export const listPermissionItems = [
     {
-        name: "Nhân sự"
+        name: "Cấu hình"
     },
     {
         name: "Danh sách quyền hạn",
@@ -34,7 +34,7 @@ export const listPermissionItems = [
 
 export const createPermissionItems = [
     {
-        name: "Nhân sự"
+        name: "Cấu hình"
     },
     {
         name: "Danh sách quyền hạn",
@@ -48,7 +48,7 @@ export const createPermissionItems = [
 
 export const updatePermissionItems = [
     {
-        name: "Nhân sự"
+        name: "Cấu hình"
     },
     {
         name: "Danh sách quyền hạn",
@@ -59,12 +59,26 @@ export const updatePermissionItems = [
     }
 ]
 
-export const accountAuthorizationItems = [
+export const listRoleItems = [
     {
-        name: "Nhân sự"
+        name: "Cấu hình"
     },
     {
         name: "Phân quyền tài khoản",
         path: "/cau-hinh/phan-quyen-tai-khoan"
+    }
+]
+
+export const createRoleItems = [
+    {
+        name: "Cấu hình"
+    },
+    {
+        name: "Phân quyền tài khoản",
+        path: "/cau-hinh/phan-quyen-tai-khoan"
+    },
+    {
+        name: "Tạo mới vai trò",
+        path: "/cau-hinh/phan-quyen-tai-khoan/tao-moi-vai-tro"
     }
 ]

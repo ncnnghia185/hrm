@@ -36,6 +36,12 @@ export const getChildPermissions = async (parent_id: string) => {
     return response.data
 }
 
+// get permission tree
+export const getPermissionTree = async () => {
+    const response = await axios.get(ROUTES.GET_PERMISSION_TREE_ROUTE)
+    return response.data
+}
+
 // search the permission
 export const searchPermission = async (query: string) => {
     const response = await axios.post(ROUTES.SEARCH_PERMISSION_ROUTE, {

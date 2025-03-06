@@ -6,7 +6,7 @@ import { getCache, setCache } from "../../utils/cache_data";
 
 const CACHE_PREFIX = "permissions";
 const CACHE_VERSION_KEY = `${CACHE_PREFIX}:version`;
-const TTL = 3600; // 1 hour
+const TTL = 3600;
 
 // Helper to get current cache version
 const getCacheVersion = async (): Promise<number> => {

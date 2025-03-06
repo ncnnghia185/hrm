@@ -23,9 +23,9 @@ const ListEmployees = () => {
         <div className="w-[90%] md:w-[95%] h-[1px] border-b"></div>
         <div className="h-full w-full flex flex-col mt-1">
           <div className="w-full h-[16%] md:h-[10%] flex flex-col md:flex-row items-center md:justify-between gap-2">
-            <div className="w-72 lg:w-96 flex sm:pl-2">
-              <SearchBar placeholder="Tìm thành viên ..." />
-            </div>
+            {/* <div className="w-72 lg:w-96 flex sm:pl-2">
+              <SearchBar placeholder="Tìm thành viên ..." onSearch={() => {}}/>
+            </div> */}
 
             <div className="flex-1 w-full flex lg:hidden pl-7 ">
               <FilterAndSort />

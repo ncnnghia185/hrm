@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-// import config from "../config/config.env";
-// const SECRET_KEY = config.jwt_secret;
-const SECRET_KEY = "SECRET_KEY"
+import configEnv from "../configs/env.config";
+const SECRET_KEY = configEnv.jwt_secret;
 
-const generateAccessToken = (accountId: string) => {
-  return jwt.sign({ id: accountId }, SECRET_KEY, { expiresIn: "30m" });
+
+const generateAccessToken = (accountId: string, roles: string[], permissions: string[] = []) => {
+  return jwt.sign({ id: accountId, roles, permissions }, SECRET_KEY, { expiresIn: "30m" });
 };
 
 const generateRefreshToken = (accountId: string) => {

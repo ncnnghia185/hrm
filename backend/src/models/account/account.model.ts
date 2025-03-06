@@ -1,6 +1,7 @@
-import { Table, Column, Model, DataType, HasMany, HasOne } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasOne, HasMany, BelongsToMany } from 'sequelize-typescript';
 import { Employee } from '../employee/employee.model';
 import { AccountRole } from '../role/account_roles.model';
+import { Role } from '../role/role.model';
 import { PasswordReset } from './password_reset.model';
 import { RefreshToken } from './refresh_token.model';
 import { FailedLogin } from './failed_login.model';
@@ -40,9 +41,6 @@ export class Account extends Model<Account> {
     @HasOne(() => Employee)
     employee!: Employee;
 
-    @HasMany(() => AccountRole)
-    accountRoles!: AccountRole[];
-
     @HasMany(() => PasswordReset)
     passwordResets!: PasswordReset[];
 
@@ -51,4 +49,8 @@ export class Account extends Model<Account> {
 
     @HasMany(() => FailedLogin)
     failedLogins!: FailedLogin[];
+
+    // 👇 Thêm quan hệ Many-to-Many để lấy `roles` trực tiếp
+    @BelongsToMany(() => Role, () => AccountRole)
+    roles!: Role[];
 }

@@ -13,37 +13,30 @@ const checkExistedAccount = async (id: string, email: string) => {
     });
 }
 
-const createAccount = async (id: string, email: string, password: string, full_name: string, roleId: string) => {
-    console.log("crete account created")
-    // const transaction = await sequelize.transaction();
-    // try {
-    //     // 1. Tạo tài khoản
-    //     const account = await Account.create(
-    //         { id, 
-    //           email,
-    //           password },
-    //         { transaction } 
-    //     );
+const createAccount = async (id: string, email: string, password: string, full_name: string) => {
 
-    //     // 2. Tạo employee cho tài khoản này
-    //     const employee = await Employee.build({ id: account.id });
-    //     await employee.save();
+    const transaction = await sequelize.transaction();
+    try {
+        // 1. Tạo tài khoản
+        const account = await Account.create(
+            {
+                id,
+                email,
+                password
+            } as any,
+            { transaction }
+        );
 
-    //     // 3. Gán role cho tài khoản
-    //     await AccountRole.create(
-    //         { account_id: id, role_id: roleId },
-    //         { transaction }
-    //     );
+        // 2. Tạo employee cho tài khoản này
+        // const employee = await Employee.create({ id: account.id, full_name: full_name } as any);
 
-    //     // 4. Commit transaction nếu tất cả thành công
-    //     await transaction.commit();
+        await transaction.commit();
 
-    //     return account;
-    // } catch (error) {
-    //     // Nếu có lỗi, rollback toàn bộ
-    //     await transaction.rollback();
-    //     throw error;
-    // }
+        return account;
+    } catch (error) {
+        await transaction.rollback();
+        throw error;
+    }
 }
 
 const getAllAccounts = async () => {

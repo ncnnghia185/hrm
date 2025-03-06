@@ -3,7 +3,6 @@ import React from "react";
 import AccountInfoForm from "./forms/accountForm";
 import EmployeeInfoForm from "./forms/employeeForm";
 import PositionInfoForm from "./forms/positionForm";
-import PermissionInfoForm from "./forms/permissionForm";
 
 type Props = {};
 

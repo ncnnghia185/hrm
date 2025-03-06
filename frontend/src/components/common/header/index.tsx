@@ -25,9 +25,9 @@ const HeaderComponent = () => {
           <HiOutlineMenuAlt1 className="text-xl text-color" />
         </div>
 
-        <div className="hidden lg:flex items-center">
+        {/* <div className="hidden lg:flex items-center">
           <SearchBar placeholder="Nhập thông tin tìm kiếm ..." />
-        </div>
+        </div> */}
       </div>
 
       {/* <div className="flex items-center gap-2">

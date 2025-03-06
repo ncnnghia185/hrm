@@ -38,10 +38,10 @@ const CreateEmployeeBrief = () => {
       </div>
 
       {/* Nút Save / Cancel */}
-      <div className="w-full flex items-center justify-center gap-3 xl:gap-7">
+      {/* <div className="w-full flex items-center justify-center gap-3 xl:gap-7">
         <SaveButton loading={true} onClick={() => {}} />
         <CancelButton />
-      </div>
+      </div> */}
     </div>
   );
 };

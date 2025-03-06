@@ -60,6 +60,19 @@ export type SearchPermissionResponse = {
     data: SearchPermissionDate[]
 }
 
+export type PermissionNode = {
+    id: string;
+    name: string;
+    parent_id: string | null,
+    children: PermissionNode[];
+}
+export type GetPermissionTreeResponse = {
+    success: boolean;
+    errCode: number;
+    message: string;
+    data: PermissionNode[];
+};
+
 export type UpdatePermissionResponse = {
     success: boolean,
     errCode: number,

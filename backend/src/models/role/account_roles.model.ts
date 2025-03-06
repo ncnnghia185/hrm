@@ -4,17 +4,9 @@ import { Role } from './role.model';
 
 @Table({
     tableName: 'account_role',
-    timestamps: true
+    timestamps: false // 👈 Không cần timestamps cho bảng trung gian
 })
 export class AccountRole extends Model<AccountRole> {
-    @Column({
-        type: DataType.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-        allowNull: false,
-    })
-    id!: string;
-
     @ForeignKey(() => Account)
     @Column({
         type: DataType.STRING(255),

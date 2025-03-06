@@ -2,6 +2,7 @@ import { Op } from "sequelize";
 import { Permission } from "../../models/permission/permission.model";
 import { CreatePermissionDTO, UpdatePermissionDTO } from "../../types/permission/permission.dto";
 import { AppError } from "../../utils/custom_error";
+import { RolePermission } from "../../models";
 const createParentPermission = async (data: CreatePermissionDTO) => {
     const checkPermission = await Permission.findOne({ where: { name: data.name } })
     if (checkPermission) {
@@ -74,29 +75,26 @@ const deletePermission = async (id: string) => {
     if (!permission) {
         throw new Error("Permission not found");
     }
+    const isPermissionUsed = await RolePermission.findOne({ where: { permission_id: id } });
+    if (isPermissionUsed) {
+        throw new AppError("Permission is assigned to a Role and cannot be deleted", 400, 1005);
+    }
     return await Permission.destroy({ where: { id } });
 }
 
 const selectPermissionTree = async () => {
-    const permissions = await Permission.findAll({ raw: true })
-    const permissionMap = new Map()
-    permissions.forEach((permission) => {
-        permissionMap.set(permission.id, { ...permission, children: [] })
-    })
-    const rootPermission: any[] = []
-
-    permissions.forEach((permission) => {
-        if (permission.parent_id) {
-            const parent = permissionMap.get(permission.parent_id)
-            if (parent) {
-                parent.children.push(permissionMap.get(permission.id))
+    return await Permission.findAll({
+        attributes: ["id", "name", "parent_id"],
+        include: [
+            {
+                model: Permission,
+                as: "children",
+                attributes: ["id", "name"],
             }
-        } else {
-            rootPermission.push(permissionMap.get(permission.id))
-        }
-    })
-    return rootPermission
-}
+        ]
+    });
+};
+
 
 const selectPermissionByListIds = async (ids: string[]) => {
     return await Permission.findAll({ where: { id: ids } })

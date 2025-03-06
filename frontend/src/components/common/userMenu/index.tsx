@@ -17,7 +17,6 @@ const UserMenuDropdown = () => {
   // navigate dropdown menu
   const navigateDropdown = (path: string) => {
     setIsOpenDropdown(false);
-    // navigate to link
     router.push(path);
   };
 
@@ -75,7 +74,7 @@ const UserMenuDropdown = () => {
 
           <div className="border-t border-color">
             <button className="w-full text-left px-4 py-2 mt-2 flex items-center gap-2 hover:hover-component-color hover:rounded-lg cursor-pointer">
-              <IoLogOutOutline size={21} className="text-color" />{" "}
+              <IoLogOutOutline size={21} className="text-color" />
               <span className="text-color font-medium">Đăng xuất</span>
             </button>
           </div>

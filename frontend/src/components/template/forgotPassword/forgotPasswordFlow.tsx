@@ -19,15 +19,7 @@ const ForgotPasswordFlow = () => {
       setOTPCode(data.otp);
       setStep(3);
     } else if (step === 3) {
-      console.log(
-        "Password changed with email:",
-        email,
-        "OTP:",
-        OTPCode,
-        "New password:",
-        data.password
-      );
-      router.push("/dang-nhap");
+      // router.push("/dang-nhap");
     }
   };
 

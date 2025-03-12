@@ -9,13 +9,17 @@ export const useSearch = <T,>({ searchFunction }: UseSearchProps<T>) => {
     const [searchResults, setSearchResults] = useState<T[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [hasSearched, setHasSearched] = useState<boolean>(false);
 
     const search = useCallback(async (query: string) => {
-        if (query.trim() === "") return;
-
+        if (query.trim() === "") {
+            setHasSearched(false);
+            setSearchResults([]);
+            return;
+        }
         setIsLoading(true);
         setError(null);
-
+        setHasSearched(true);
         try {
             const results = await searchFunction(query);
             setSearchResults(results);
@@ -27,12 +31,21 @@ export const useSearch = <T,>({ searchFunction }: UseSearchProps<T>) => {
         }
     }, [searchFunction]);
 
+    const handleInputChange = (value: string) => {
+        setSearchValue(value);
+        if (value.trim() === "") {
+            setHasSearched(false);
+            setSearchResults([]);
+        }
+    };
+
     return {
         searchValue,
-        setSearchValue,
+        setSearchValue: handleInputChange,
         searchResults,
         isLoading,
         error,
         search,
+        hasSearched
     };
 };

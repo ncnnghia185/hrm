@@ -13,25 +13,19 @@ const checkExistedAccount = async (id: string, email: string) => {
     });
 }
 
-const createAccount = async (id: string, email: string, password: string, full_name: string) => {
+const createAccount = async (id: string, email: string, password: string, employeeId: string) => {
 
     const transaction = await sequelize.transaction();
     try {
-        // 1. Tạo tài khoản
         const account = await Account.create(
             {
                 id,
                 email,
                 password
             } as any,
-            { transaction }
+            { transaction, employeeId }
         );
-
-        // 2. Tạo employee cho tài khoản này
-        // const employee = await Employee.create({ id: account.id, full_name: full_name } as any);
-
         await transaction.commit();
-
         return account;
     } catch (error) {
         await transaction.rollback();

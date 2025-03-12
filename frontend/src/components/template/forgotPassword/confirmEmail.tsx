@@ -8,7 +8,7 @@ type Props = {
 };
 
 const ConfirmAccountEmail = ({ onSuccess }: Props) => {
-  const { isSubmitted, handleSubmit, validationSchema } =
+  const { handleSendForgotPasswordEmail, validationSchema, loadingSendEmail } =
     useConfirmAccountEmail(onSuccess);
   return (
     <div className="w-full max-w-md">
@@ -19,7 +19,7 @@ const ConfirmAccountEmail = ({ onSuccess }: Props) => {
       <Formik
         initialValues={{ email: "" }}
         validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={handleSendForgotPasswordEmail}
       >
         {({ isSubmitting }) => (
           <Form className="mt-4 flex flex-col items-center justify-center">
@@ -42,10 +42,10 @@ const ConfirmAccountEmail = ({ onSuccess }: Props) => {
             </div>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={loadingSendEmail}
               className="w-[50%] bg-[#465fff] text-white py-2 rounded-md hover:bg-[#3b54f5] transition duration-300"
             >
-              {isSubmitting ? "Đang gửi..." : "Gửi mã OTP"}
+              {loadingSendEmail ? "Đang gửi..." : "Gửi mã OTP"}
             </button>
           </Form>
         )}

@@ -107,7 +107,8 @@ const getPermissionById = async (req: Request, res: Response) => {
         if (!permission) {
             return responseHandler(res, false, 404, 2, "Không tìm thấy quyền này", null);
         }
-        responseHandler(res, true, 200, 0, "Lấy thông tin quyền thành công", permission);
+        const permissionInfo = await PermissionServices.selectPermissionById(id)
+        responseHandler(res, true, 200, 0, "Lấy thông tin quyền thành công", permissionInfo);
     } catch (error) {
         console.error(error);
         responseHandler(res, false, 500, 1, "Lỗi server", null);
@@ -117,16 +118,27 @@ const getPermissionById = async (req: Request, res: Response) => {
 // Get permission tree
 const getPermissionTree = async (req: Request, res: Response) => {
     try {
-        const version = await getCacheVersion();
-        const cacheKey = `${CACHE_PREFIX}:v${version}:tree`;
-        const cachedData = await getCache(cacheKey);
-        if (cachedData) {
-            return responseHandler(res, true, 200, 0, "Get permission tree", cachedData);
-        }
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 3;
+        // const version = await getCacheVersion();
+        // const cacheKey = `${CACHE_PREFIX}:v${version}:tree`;
+        // const cachedData = await getCache(cacheKey);
+        // if (cachedData) {
+        //     return responseHandler(res, true, 200, 0, "Get permission tree", cachedData);
+        // }
 
-        const permissions = await PermissionServices.selectPermissionTree();
-        await setCache(cacheKey, permissions, TTL);
-        responseHandler(res, true, 200, 0, "Get permission tree successfully", permissions);
+        const { data, total, totalPages } = await PermissionServices.selectPermissionTree(page, limit);
+        // await setCache(cacheKey, data, TTL);
+        const responseData = {
+            permissionTree: data,
+            pagination: {
+                total,
+                totalPages,
+                currentPage: page,
+                pageSize: limit,
+            }
+        }
+        responseHandler(res, true, 200, 0, "Get permission tree successfully", responseData);
     } catch (error) {
         console.error(error);
         responseHandler(res, false, 500, 1, "Internal server error", null);
@@ -156,7 +168,6 @@ const getChildPermission = async (req: Request, res: Response) => {
 // Search permissions
 const searchPermission = async (req: Request, res: Response) => {
     try {
-        console.log(req.body)
         const { query } = req.body;
         const version = await getCacheVersion();
         const cacheKey = `${CACHE_PREFIX}:v${version}:search:${query}`;
@@ -189,11 +200,33 @@ const updatePermission = async (req: Request, res: Response) => {
         await PermissionServices.updatePermission(id, req.body);
         await incrementCacheVersion();
         responseHandler(res, true, 200, 0, "Cập nhật quyền thành công", null);
+        return
     } catch (error) {
-        console.error(error);
         responseHandler(res, false, 500, 1, "Lỗi server", null);
+        return
     }
 };
+
+// update child permission
+const updateChildPermission = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params
+        const permission = await checkPermissionExists(id);
+        if (!permission) {
+            return responseHandler(res, false, 404, 2, "Không tìm thấy quyền này", null);
+        }
+        const { parent_id, name, description } = req.body
+        if (!name && !description) {
+            return responseHandler(res, false, 400, 3, "Không có thông tin cập nhật", null);
+        }
+        await PermissionServices.updateChildPermission(id, parent_id, req.body)
+        responseHandler(res, true, 200, 0, "Cập nhật quyền thành công", null);
+        return
+    } catch (error) {
+        responseHandler(res, false, 500, 1, "Lỗi server", null);
+        return
+    }
+}
 
 // Delete permission
 const deletePermission = async (req: Request, res: Response) => {
@@ -221,5 +254,6 @@ export const permissionController = {
     getChildPermission,
     searchPermission,
     updatePermission,
+    updateChildPermission,
     deletePermission,
 };

@@ -10,9 +10,13 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import { useDropdown } from "@/hooks/shared/useToggleDropdown";
+import { useLogout } from "@/hooks/auth/logout/useLogout";
+import { useLogin } from "@/hooks/auth/login/useLogin";
 const UserMenuDropdown = () => {
   const router = useRouter();
   const { dropdownRef, isOpenDropdown, setIsOpenDropdown } = useDropdown();
+  const { handleLogoutAccount } = useLogout();
+  const { accountData } = useLogin("");
 
   // navigate dropdown menu
   const navigateDropdown = (path: string) => {
@@ -48,7 +52,9 @@ const UserMenuDropdown = () => {
         >
           <div className="p-2 border-b border-color">
             <p className="font-medium text-color">Nguyễn Chí Nghĩa</p>
-            <p className="text-sm text-color">ncn180501@gmail.com</p>
+            <p className="text-sm text-color">
+              {accountData && accountData.email}
+            </p>
           </div>
 
           <ul className="py-2">
@@ -73,10 +79,13 @@ const UserMenuDropdown = () => {
           </ul>
 
           <div className="border-t border-color">
-            <button className="w-full text-left px-4 py-2 mt-2 flex items-center gap-2 hover:hover-component-color hover:rounded-lg cursor-pointer">
+            <div
+              className="w-full text-left px-4 py-2 mt-2 flex items-center gap-2 hover:hover-component-color hover:rounded-lg cursor-pointer"
+              onClick={handleLogoutAccount}
+            >
               <IoLogOutOutline size={21} className="text-color" />
               <span className="text-color font-medium">Đăng xuất</span>
-            </button>
+            </div>
           </div>
         </div>
       )}

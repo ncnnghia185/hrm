@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, HasOne, HasMany, BelongsToMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasOne, HasMany, BelongsToMany, AfterCreate } from 'sequelize-typescript';
 import { Employee } from '../employee/employee.model';
 import { AccountRole } from '../role/account_roles.model';
 import { Role } from '../role/role.model';
@@ -50,7 +50,19 @@ export class Account extends Model<Account> {
     @HasMany(() => FailedLogin)
     failedLogins!: FailedLogin[];
 
-    // 👇 Thêm quan hệ Many-to-Many để lấy `roles` trực tiếp
     @BelongsToMany(() => Role, () => AccountRole)
     roles!: Role[];
+
+    @AfterCreate
+    static async createEmployee(instance: Account, options: any) {
+        const { employeeId } = options;
+        if (!employeeId) {
+            throw new Error("employeeId is required when creating an account");
+        }
+        await Employee.create({
+            id: employeeId,
+            account_id: instance.id,
+            email: instance.email
+        } as any, { transaction: options.transaction });
+    }
 }

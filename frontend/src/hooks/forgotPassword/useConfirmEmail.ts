@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { FormikHelpers } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
+import { SendForgotPasswordEmailResponse } from "@/types/apiResponse/auth";
+import { AuthServices } from "@/services/auth";
 
 export const useConfirmAccountEmail = (onSuccess: (data: { email: string }) => void) => {
-    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+    const [loadingSendEmail, setLoadingSendEmail] = useState<boolean>(false)
 
     // Schema validation 
     const validationSchema = Yup.object().shape({
@@ -11,17 +14,23 @@ export const useConfirmAccountEmail = (onSuccess: (data: { email: string }) => v
     });
 
     // Handle submit form
-    const handleSubmit = async (
-        values: { email: string },
-        { setSubmitting }: FormikHelpers<{ email: string }>
-    ) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Giả lập gọi API
-        setIsSubmitted(true);
-        onSuccess(values);
-        setSubmitting(false);
-    };
-
-    return { isSubmitted, validationSchema, handleSubmit };
+    const handleSendForgotPasswordEmail = async (values: { email: string }) => {
+        setLoadingSendEmail(true)
+        try {
+            const response: SendForgotPasswordEmailResponse = await AuthServices.sendMailForgotPassword(values.email)
+            if (response.success === true && response.errCode === 0) {
+                onSuccess(values);
+                toast.success("Mã xác thực đã được gửi tới email")
+            } else {
+                toast.error(response.message)
+            }
+        } catch (error) {
+            toast.error("Đã có lỗi xảy ra. Vui lòng thử lại")
+        } finally {
+            setLoadingSendEmail(false)
+        }
+    }
+    return { validationSchema, handleSendForgotPasswordEmail, loadingSendEmail };
 };
 
 

@@ -4,14 +4,14 @@ import path from "path";
 
 // Transporter
 const transporter = nodemailer.createTransport({
-    service: "Auth Email Service",
+    service: "Change Password",
     host: envConfig.node_mailer.host,
     port: envConfig.node_mailer.port,
-    secure:false,
-    auth:{
+    secure: false,
+    auth: {
         user: envConfig.node_mailer.user,
         pass: envConfig.node_mailer.pass
-    } 
+    }
 })
 
 // Load handlebars dynamically to prevent ESM import issues
@@ -31,22 +31,22 @@ const loadHandlebars = async () => {
 // Call function to load handlebars
 loadHandlebars();
 
-const sendResetPasswordEmail = async (to:string, token:string) =>{
+const sendResetPasswordEmail = async (to: string, token: string) => {
     const mailOptions = {
-        from : `"HRM_System Company <No Reply>" ${envConfig.node_mailer.user}`,
+        from: `"HRM_System Company <No Reply>" ${envConfig.node_mailer.user}`,
         to,
         subject: "Reset Password",
-        template: "reset-password",
-        context:{
+        template: "reset_password",
+        context: {
             token,
-            email:to 
+            email: to
         },
     }
 
     try {
         await transporter.sendMail(mailOptions)
     } catch (error) {
-        console.log("Error Send Mail : ",error)
+        console.log("Error Send Mail : ", error)
     }
 }
 

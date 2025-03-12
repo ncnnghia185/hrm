@@ -46,6 +46,31 @@ export const createPermissionItems = [
     }
 ]
 
+export const createChildPermissionItems = [
+    {
+        name: "Cấu hình"
+    },
+    {
+        name: "Danh sách quyền hạn",
+        path: "/cau-hinh/danh-sach-quyen-han"
+    },
+    {
+        name: "Thêm mới quyền con"
+    }
+]
+
+export const detailPermissionItems = [
+    {
+        name: "Cấu hình"
+    },
+    {
+        name: "Danh sách quyền hạn",
+        path: "/cau-hinh/danh-sach-quyen-han"
+    },
+    {
+        name: "Chi tiết quyền hạn"
+    }
+]
 export const updatePermissionItems = [
     {
         name: "Cấu hình"

@@ -16,12 +16,12 @@ export const useCreateMainPermission = () => {
     const handleSubmitPermission = async (values: CreateMainPermission) => {
         setLoading(true);
         try {
-            // Call API
             const response: CreateMainPermissionResponse = await createMainPermission(values)
             if (!response.success && response.errCode === 1001) {
                 toast.error(response.message)
             } else {
                 toast.success("Thêm mới quyền chính thành công");
+                router.push("/cau-hinh/danh-sach-quyen-han")
             }
         } catch (error) {
             toast.error("Có lỗi xảy ra khi tạo quyền");

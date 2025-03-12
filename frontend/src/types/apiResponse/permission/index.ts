@@ -64,14 +64,40 @@ export type PermissionNode = {
     id: string;
     name: string;
     parent_id: string | null,
+    description: string
     children: PermissionNode[];
 }
+export type PermissionTreeData = {
+    pagination: {
+        total: number;
+        currentPage: number;
+        pageSize: number;
+        totalPages: number;
+    }
+
+    permissionTree: PermissionNode[];
+};
 export type GetPermissionTreeResponse = {
     success: boolean;
     errCode: number;
     message: string;
-    data: PermissionNode[];
+    data: PermissionTreeData;
 };
+
+export type PermissionInfo = {
+    id: string,
+    name: string,
+    description: string
+}
+export type GetMainPermissionInfoResponse = {
+    success: boolean,
+    errCode: number,
+    message: string,
+    data: {
+        mainPermission: PermissionInfo,
+        childPermissions: PermissionInfo[]
+    }
+}
 
 export type UpdatePermissionResponse = {
     success: boolean,

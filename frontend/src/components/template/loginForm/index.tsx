@@ -3,10 +3,12 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import ToggleTheme from "@/components/common/themeToggle";
-import { useLogin } from "../../../hooks/login/useLogin";
+import { useLogin } from "../../../hooks/auth/login/useLogin";
+import { generateId } from "@/utils/generateUUID";
 const LoginForm = () => {
-  const { showPassword, togglePassword, LoginSchema, handleSubmit } =
-    useLogin();
+  const refreshTokenId = generateId("RTI");
+  const { showPassword, togglePassword, LoginSchema, handleSubmit, loading } =
+    useLogin(refreshTokenId);
   return (
     <div className="w-full flex items-center justify-center mt-4 relative">
       <div className="bg-color p-8 border-[1px] border-color rounded-lg sm:shadow-none shadow-lg w-full max-w-md">
@@ -15,7 +17,7 @@ const LoginForm = () => {
           validationSchema={LoginSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, errors }) => (
+          {({ errors }) => (
             <Form>
               <div className="mb-4">
                 <label
@@ -55,7 +57,7 @@ const LoginForm = () => {
                 <button
                   type="button"
                   className={`absolute inset-y-0 right-3 flex items-center text-color ${
-                    errors.password ? "top-2" : "top-8"
+                    errors.password ? "top-2" : errors.email ? "top-6" : "top-8"
                   }`}
                   onClick={togglePassword}
                 >
@@ -81,7 +83,7 @@ const LoginForm = () => {
               <div className="w-full flex items-center justify-center">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={loading}
                   className="w-1/2 bg-[#465fff] text-white py-2 rounded-md hover:bg-[#3b54f5] transition duration-300"
                 >
                   Đăng nhập

@@ -59,7 +59,12 @@ const selectAllPermissions = async (page: number, limit: number) => {
 }
 
 const selectPermissionById = async (id: string) => {
-    return await Permission.findByPk(id);
+    const mainPermission = await Permission.findByPk(id, { attributes: ["id", "name", "description"] });
+    const childPermissions = await Permission.findAll({ where: { parent_id: id }, attributes: ["id", "name", "description"] });
+    return {
+        mainPermission,
+        childPermissions
+    }
 }
 
 const updatePermission = async (id: string, data: UpdatePermissionDTO) => {
@@ -68,6 +73,14 @@ const updatePermission = async (id: string, data: UpdatePermissionDTO) => {
         throw new Error("Permission not found");
     }
     return await Permission.update(data, { where: { id } });
+}
+
+const updateChildPermission = async (id: string, parent_id: string, data: UpdatePermissionDTO) => {
+    const permission = await selectPermissionById(id);
+    if (!permission) {
+        throw new Error("Permission not found");
+    }
+    return await Permission.update(data, { where: { id, parent_id: parent_id } });
 }
 
 const deletePermission = async (id: string) => {
@@ -82,17 +95,29 @@ const deletePermission = async (id: string) => {
     return await Permission.destroy({ where: { id } });
 }
 
-const selectPermissionTree = async () => {
-    return await Permission.findAll({
-        attributes: ["id", "name", "parent_id"],
+const selectPermissionTree = async (page: number, limit: number) => {
+    const offset = (page - 1) * limit;
+    const { count, rows: parentPermissions } = await Permission.findAndCountAll({
+        where: { parent_id: null },
+        attributes: ["id", "name", "parent_id", "description"],
+        limit,
+        offset,
         include: [
             {
                 model: Permission,
                 as: "children",
-                attributes: ["id", "name"],
-            }
-        ]
+                attributes: ["id", "name", "description"],
+            },
+        ],
     });
+    return {
+        total: count,
+        page,
+        limit,
+        totalPages: Math.ceil(count / limit),
+        data: parentPermissions,
+    };
+
 };
 
 
@@ -117,5 +142,6 @@ export const PermissionServices = {
     selectChildrenPermissions,
     searchPermissionsByName,
     updatePermission,
+    updateChildPermission,
     deletePermission,
 }

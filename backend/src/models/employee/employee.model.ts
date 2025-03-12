@@ -18,7 +18,7 @@ export class Employee extends Model<Employee> {
 
     @Column({
         type: DataType.STRING(255),
-        allowNull: false,
+        allowNull: true,
     })
     full_name!: string;
 
@@ -50,14 +50,14 @@ export class Employee extends Model<Employee> {
     @ForeignKey(() => Department)
     @Column({
         type: DataType.STRING(255),
-        allowNull: false,
+        allowNull: true,
     })
     department_id!: string;
 
     @ForeignKey(() => Position)
     @Column({
         type: DataType.STRING(255),
-        allowNull: false,
+        allowNull: true,
     })
     position_id!: string;
 

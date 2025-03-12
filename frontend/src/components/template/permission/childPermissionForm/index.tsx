@@ -12,7 +12,7 @@ type Props = {
 
 const CreateChildPermission = ({ parent_id }: Props) => {
   const { loading, ChildPermissionSchema, handleSubmitChildPermission } =
-    useCreateChildPermission();
+    useCreateChildPermission("");
   return (
     <Formik
       initialValues={{
@@ -34,7 +34,7 @@ const CreateChildPermission = ({ parent_id }: Props) => {
                     key={index}
                     className="border p-3 rounded-md flex flex-col gap-2"
                   >
-                    <div className="flex flex-col lg:flex-row items-start justify-between gap-2 lg:gap-4 xl:gap-0">
+                    <div className="flex flex-col lg:flex-row items-start justify-between gap-2 lg:gap-4 xl:gap-16">
                       {/* Name */}
                       <div className="flex flex-col w-full">
                         <label className="block text-sm xl:text-base text-color font-medium">
@@ -44,12 +44,12 @@ const CreateChildPermission = ({ parent_id }: Props) => {
                           type="text"
                           name={`permissions[${index}].name`}
                           placeholder="Nhập tên quyền..."
-                          className="mt-1 px-4 py-2 w-full h-9 lg:w-72 xl:w-80 border border-[#D1D5DB] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 text-[#95a5a6] bg-color placeholder:italic"
+                          className="mt-1 px-4 py-2 w-full h-9 lg:flex-1 border border-[#D1D5DB] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 text-color bg-color placeholder:italic"
                         />
                         <ErrorMessage
                           name={`permissions[${index}].name`}
                           component="div"
-                          className="text-red-500 text-sm"
+                          className="text-red-500 text-sm mt-1"
                         />
                       </div>
 
@@ -62,7 +62,7 @@ const CreateChildPermission = ({ parent_id }: Props) => {
                           as="textarea"
                           name={`permissions[${index}].description`}
                           placeholder="Nhập mô tả của quyền..."
-                          className="mt-1 px-4 py-2 w-full lg:w-96 h-16 border border-[#D1D5DB] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 text-[#95a5a6] bg-color placeholder:italic no-scrollbar"
+                          className="mt-1 px-4 py-2 w-full lg:flex-1 h-16 border border-[#D1D5DB] rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 text-color bg-color placeholder:italic no-scrollbar"
                         />
                         <ErrorMessage
                           name={`permissions[${index}].description`}

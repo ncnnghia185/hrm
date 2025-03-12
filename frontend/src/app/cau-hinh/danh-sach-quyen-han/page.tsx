@@ -28,7 +28,7 @@ const PermissionsList = () => {
         </div>
         <div className="w-[90%] md:w-[95%] h-[1px] border-b mt-2"></div>
         <div className="flex-1 h-full w-full flex flex-col mt-2">
-          <div className="w-full h-[16%] md:h-[10%]">
+          <div className="w-full h-[10%] md:h-[10%] relative">
             <SearchPermission />
           </div>
           <div className="flex-1 max-h-full h-full">

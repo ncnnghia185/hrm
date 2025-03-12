@@ -11,14 +11,14 @@ type Props = {
 
 const ConfirmNewPassword = ({ email, otp, onSuccess }: Props) => {
   const {
-    isSubmitted,
-    handleSubmit,
+    loadingForgotPassword,
+    handleForgotPassword,
     setShowConfirmPassword,
     setShowPassword,
     showConfirmPassword,
     showPassword,
     validationSchema,
-  } = useConfirmNewPassword(onSuccess);
+  } = useConfirmNewPassword(email, otp, onSuccess);
   return (
     <div className="w-full max-w-md">
       <h5 className="text-[#95a5a6] dark:text-[#c4c9c8] text-center text-sm md:text-base max-w-md mx-auto px-4 py-2 whitespace-normal">
@@ -28,7 +28,7 @@ const ConfirmNewPassword = ({ email, otp, onSuccess }: Props) => {
       <Formik
         initialValues={{ password: "", confirmPassword: "" }}
         validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={handleForgotPassword}
       >
         {({ isSubmitting }) => (
           <Form className="mt-4 flex flex-col items-center justify-center">
@@ -101,10 +101,10 @@ const ConfirmNewPassword = ({ email, otp, onSuccess }: Props) => {
             </div>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={loadingForgotPassword}
               className="w-[50%] bg-[#465fff] text-white py-2 rounded-md hover:bg-[#3b54f5] transition duration-300"
             >
-              {isSubmitting ? "Đang cập nhật..." : "Cập nhật mật khẩu"}
+              {loadingForgotPassword ? "Đang cập nhật..." : "Cập nhật mật khẩu"}
             </button>
           </Form>
         )}

@@ -1,14 +1,28 @@
-import { createNewChildPermission } from "@/services/permission";
+import { createNewChildPermission, getMainPermissionInfo } from "@/services/permission";
 import { CreateChildPermissionData } from "@/types/fetchAPI/permission";
-import { CreateChildPermissionResponse } from "@/types/apiResponse/permission";
+import { CreateChildPermissionResponse, GetMainPermissionInfoResponse, PermissionInfo } from "@/types/apiResponse/permission";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export const useCreateChildPermission = () => {
+export const useCreateChildPermission = (permission_id: string) => {
     const router = useRouter()
     const [loading, setLoading] = useState<boolean>(false);
+    const [mainPermissionInfo, setMainPermissionInfo] = useState<PermissionInfo>()
+    useEffect(() => {
+        const fetchDetailsParentPermission = async () => {
+            const response: GetMainPermissionInfoResponse = await getMainPermissionInfo(permission_id)
+            if (response.success !== true) {
+                toast.error("Lấy thông tin nhóm quyền thất bại")
+            } else {
+                setMainPermissionInfo(response.data.mainPermission)
+            }
+        }
+        if (permission_id !== "") {
+            fetchDetailsParentPermission()
+        }
+    }, [permission_id])
     const ChildPermissionSchema = Yup.object().shape({
         parent_id: Yup.string().required("Mã quyền cha là bắt buộc"),
         permissions: Yup.array().of(Yup.object().shape({
@@ -39,6 +53,7 @@ export const useCreateChildPermission = () => {
     return {
         loading,
         ChildPermissionSchema,
-        handleSubmitChildPermission
+        handleSubmitChildPermission,
+        mainPermissionInfo
     }
 }

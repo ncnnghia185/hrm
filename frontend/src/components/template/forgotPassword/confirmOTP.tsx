@@ -10,8 +10,8 @@ const ConfirmOTP = ({
   email: string;
   onSuccess: (data: { otp: string }) => void;
 }) => {
-  const { validationSchema, isSubmitted, handleSubmit } =
-    useConfirmOTP(onSuccess);
+  const { validationSchema, loadingConfirmOtp, handleConfirmOtp } =
+    useConfirmOTP(email, onSuccess);
   return (
     <div className="w-full max-w-md">
       <h5 className="text-[#95a5a6] dark:text-[#c4c9c8] text-center text-sm md:text-base max-w-md mx-auto px-4 py-2 whitespace-normal">
@@ -21,7 +21,7 @@ const ConfirmOTP = ({
       <Formik
         initialValues={{ otp: "" }}
         validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={handleConfirmOtp}
       >
         {({ isSubmitting }) => (
           <Form className="mt-4 flex flex-col items-center justify-center">
@@ -44,10 +44,10 @@ const ConfirmOTP = ({
             </div>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={loadingConfirmOtp}
               className="w-[40%] bg-[#465fff] text-white py-2 rounded-md hover:bg-[#3b54f5] transition duration-300"
             >
-              {isSubmitting ? "Đang xác minh..." : "Xác minh OTP"}
+              {loadingConfirmOtp ? "Đang xác minh..." : "Xác minh OTP"}
             </button>
           </Form>
         )}

@@ -30,6 +30,12 @@ export const getAllMainPermissions = async (page: number = 1, limit: number = 3)
     return response.data
 }
 
+// get main permission infor
+export const getMainPermissionInfo = async (id: string) => {
+    const response = await axios.get(ROUTES.GET_MAIN_PERMISSION_INFO_ROUTE(id))
+    return response.data
+}
+
 // get child permissions of main permission
 export const getChildPermissions = async (parent_id: string) => {
     const response = await axios.get(ROUTES.GET_CHILD_PERMISSION_ROUTE(parent_id))
@@ -37,8 +43,10 @@ export const getChildPermissions = async (parent_id: string) => {
 }
 
 // get permission tree
-export const getPermissionTree = async () => {
-    const response = await axios.get(ROUTES.GET_PERMISSION_TREE_ROUTE)
+export const getPermissionTree = async (page: number = 1, limit: number = 3) => {
+    const response = await axios.get(ROUTES.GET_PERMISSION_TREE_ROUTE, {
+        params: { page, limit }
+    })
     return response.data
 }
 
@@ -51,12 +59,21 @@ export const searchPermission = async (query: string) => {
             'Content-Type': 'application/json'
         }
     })
-    return response.data
+    return response.data.data || []
 }
 
 // update permission
-export const updatePermission = async (id: string, data: UpdatePermissionData) => {
-    const response = await axios.put(ROUTES.UPDATE_PERMISSION_ROUTE(id), { data }, {
+export const updateMainPermission = async (id: string, data: UpdatePermissionData) => {
+    const response = await axios.put(ROUTES.UPDATE_PERMISSION_ROUTE(id), data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response.data
+}
+
+export const updateChildPermission = async (id: string, parent_id: string, data: UpdatePermissionData) => {
+    const response = await axios.put(ROUTES.UPDATE_CHILD_PERMISSION_ROUTE(id), { parent_id, ...data }, {
         headers: {
             'Content-Type': 'application/json'
         }

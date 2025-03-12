@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { FormikHelpers } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { ForgotPasswordResponse } from "@/types/apiResponse/auth";
+import { AuthServices } from "@/services/auth";
 
 
 // Custom hook xử lý logic đặt lại mật khẩu
-export const useConfirmNewPassword = (onSuccess: (data: { password: string }) => void) => {
-    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+export const useConfirmNewPassword = (email: string, otp: string, onSuccess: (data: { password: string }) => void) => {
+    const router = useRouter()
+    const [loadingForgotPassword, setLoadingForgotPassword] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
@@ -17,23 +22,35 @@ export const useConfirmNewPassword = (onSuccess: (data: { password: string }) =>
     });
 
     // Xử lý submit form
-    const handleSubmit = async (
-        values: { password: string; confirmPassword: string },
-        { setSubmitting }: FormikHelpers<{ password: string; confirmPassword: string }>
+    const handleForgotPassword = async (
+        values: { password: string; }
     ) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Giả lập gọi API
-        setIsSubmitted(true);
-        onSuccess({ password: values.password });
-        setSubmitting(false);
+        setLoadingForgotPassword(true)
+        try {
+            const response: ForgotPasswordResponse = await AuthServices.forgotPassword(email, otp, values.password)
+            if (response.success === true && response.errCode === 0) {
+                router.push("/dang-nhap")
+                toast.success("Đặt lại mật khẩu thành công!")
+            } else {
+                toast.error(response.message)
+                return;
+            }
+
+        } catch (error) {
+            toast.error("Đã có lỗi xảy ra. Vui lòng thử lại")
+        } finally {
+            setLoadingForgotPassword(false)
+        }
+
     };
 
     return {
-        isSubmitted,
+        loadingForgotPassword,
         showPassword,
         setShowPassword,
         showConfirmPassword,
         setShowConfirmPassword,
         validationSchema,
-        handleSubmit,
+        handleForgotPassword,
     };
 };

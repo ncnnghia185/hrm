@@ -4,11 +4,13 @@ import { createRole } from "@/services/role";
 import { GetPermissionTreeResponse, PermissionNode } from "@/types/apiResponse/permission";
 import { CreateRoleResponse } from "@/types/apiResponse/role";
 import { CreateRole } from "@/types/fetchAPI/role";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 export const useCreateRole = () => {
+    const router = useRouter()
     const [loading, setLoading] = useState<boolean>(false);
     const [loadingPermission, setLoadingPermission] = useState<boolean>(false)
     const [permissionTree, setPermissionTree] = useState<PermissionNode[]>([])
@@ -19,7 +21,7 @@ export const useCreateRole = () => {
             try {
                 const response: GetPermissionTreeResponse = await getPermissionTree()
                 if (response.success === true && response.errCode === 0) {
-                    setPermissionTree(response.data)
+                    setPermissionTree(response.data.permissionTree)
                 } else {
                     toast.error(response.message)
                 }
@@ -49,14 +51,6 @@ export const useCreateRole = () => {
         }));
     };
 
-    // const toggleAllPermissions = (parent: any) => {
-    //     const childIds = parent.children.map((child: any) => child.id);
-    //     const allSelected = childIds.every((id: any) => selectedPermissions.includes(id));
-    //     setSelectedPermissions((prev) =>
-    //         allSelected ? prev.filter((id) => !childIds.includes(id)) : [...prev, ...childIds]
-    //     );
-    // };
-
     // Submit create role
     const handleCreateRole = async (values: { formA: CreateRole; formB: { permissions: string[] } }) => {
         const combinedData = {
@@ -66,10 +60,11 @@ export const useCreateRole = () => {
         setLoading(true)
         try {
             const response: CreateRoleResponse = await createRole(combinedData)
-            if (response.success !== true && response.errCode !== 0) {
+            if (response.errCode !== 0) {
                 toast.error(response.message)
             } else {
                 toast.success("Tạo mới vai trò thành công!");
+                router.push("/cau-hinh/phan-quyen-tai-khoan")
             }
         } catch (error) {
             toast.error("Đã có lỗi xảy ra. Vui lòng thử lại.")

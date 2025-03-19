@@ -8,10 +8,10 @@ const router = Router();
 
 router.post(
     '/create-role',
-    authMiddleware,
-    roleMiddleware(["admin"]),
-    permissionMiddleware(["create-role"]),
-    roleController.createNewRole
+    // authMiddleware,
+    // roleMiddleware(["admin"]),
+    // permissionMiddleware(["create-role"]),
+    roleController.createRole
 );
 
 router.get(
@@ -23,16 +23,16 @@ router.get(
 );
 
 router.get(
-    "/role/:name",
+    "/detail-role/:id",
     // verifyAccessToken,
     // checkRole(["admin", "hr"]),
     // checkPermission("view-role"),
-    roleController.getRoleByName
+    roleController.getRoleDetail
 );
 
 router.put(
-    "/update-role/:name",
-    // verifyAccessToken,
+    "/update-role/:id",
+    authMiddleware,
     // checkRole(["admin", "hr"]),
     // checkPermission("update-role"),
     roleController.updateRole
@@ -47,6 +47,6 @@ router.delete(
 );
 
 router.post("/assign/:roleId/permissions", roleController.assignPermission)
-router.get("/permission-of-role/:roleId", roleController.getPermissionsByRole)
 router.post("/assign-role-to-user", roleController.assignAccountRole)
+router.delete("/remove-permissions/:rId/:pId", authMiddleware, roleController.removePermissionFromRole)
 export default router;

@@ -3,3 +3,8 @@ export type CreateRole = {
     name: string,
     description: string | null
 }
+
+export type UpdateRoleData = {
+    name: string | null,
+    description: string | null
+}

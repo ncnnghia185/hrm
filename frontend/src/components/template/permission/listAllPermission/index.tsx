@@ -106,7 +106,7 @@ const ListAllPermission = () => {
             setPageSize(size);
             setCurrentPage(1);
           }}
-        />{" "}
+        />
       </div>
     </div>
   );

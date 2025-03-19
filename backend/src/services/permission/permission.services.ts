@@ -120,7 +120,6 @@ const selectPermissionTree = async (page: number, limit: number) => {
 
 };
 
-
 const selectPermissionByListIds = async (ids: string[]) => {
     return await Permission.findAll({ where: { id: ids } })
 }

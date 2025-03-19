@@ -25,27 +25,41 @@ export const createNewChildPermission = async (parent_id: string, permissions: C
 // get all main permissions
 export const getAllMainPermissions = async (page: number = 1, limit: number = 3) => {
     const response = await axios.get(ROUTES.GET_MAIN_PERMISSION_ROUTE, {
-        params: { page, limit }
+        params: { page, limit },
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
     return response.data
 }
 
 // get main permission infor
 export const getMainPermissionInfo = async (id: string) => {
-    const response = await axios.get(ROUTES.GET_MAIN_PERMISSION_INFO_ROUTE(id))
+    const response = await axios.get(ROUTES.GET_MAIN_PERMISSION_INFO_ROUTE(id), {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
     return response.data
 }
 
 // get child permissions of main permission
 export const getChildPermissions = async (parent_id: string) => {
-    const response = await axios.get(ROUTES.GET_CHILD_PERMISSION_ROUTE(parent_id))
+    const response = await axios.get(ROUTES.GET_CHILD_PERMISSION_ROUTE(parent_id), {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
     return response.data
 }
 
 // get permission tree
 export const getPermissionTree = async (page: number = 1, limit: number = 3) => {
     const response = await axios.get(ROUTES.GET_PERMISSION_TREE_ROUTE, {
-        params: { page, limit }
+        params: { page, limit },
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
     return response.data
 }

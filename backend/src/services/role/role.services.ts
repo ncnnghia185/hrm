@@ -1,31 +1,59 @@
 import sequelize from "../../configs/database.config";
 import { AccountRole, Permission, RolePermission } from "../../models";
 import { Role } from "../../models/role/role.model";
-import { CreateRoleDTO, UpdateRoleDTO } from "../../types/role/role.dto";
+import { UpdateRoleDTO } from "../../types/role/role.dto";
 import { AppError } from "../../utils/custom_error";
 
-const createRole = async (data: CreateRoleDTO) => {
-    // const checkExistedRole = await Role.findOne({where: {name: data.name}})
-    // if (checkExistedRole) {
-    //     throw new AppError("Vai trò này đã tồn tại", 201, 1001)
-    // }
-    return await Role.create(data);
+const checkRole = async (name: string) => {
+    return Role.findOne({ where: { name: name } })
 }
 
-const selectAllRoles = async () => {
-    return await Role.findAll({
-        attributes: ["id", "name", "description"], include: [
-            { model: RolePermission }
-        ]
-    })
+const createNewRole = async (data: { roleInfor: { id: string, name: string, description?: string }, permissions?: string[] }) => {
+    const transaction = await sequelize.transaction()
+    try {
+        const role = await Role.create({ id: data.roleInfor.id, name: data.roleInfor.name, description: data.roleInfor.description } as any, { transaction });
+        if (data.permissions && data.permissions.length > 0) {
+            const rolePermissions = data.permissions.map((permissionId) => ({
+                role_id: role.id,
+                permission_id: permissionId,
+            } as any));
+
+            await RolePermission.bulkCreate(rolePermissions, { transaction });
+            await transaction.commit();
+            return role;
+        }
+    } catch (error) {
+        await transaction.rollback();
+        throw new AppError(String(error), 500, 1004);
+    }
 }
 
-const selectRoleByName = async (name: string) => {
-    return await Role.findOne({
-        where: { name: name },
+const selectAllRoles = async (page: number, limit: number) => {
+    const offset = (page - 1) * limit;
+    const { count, rows } = await Role.findAndCountAll({
         attributes: ["id", "name", "description"],
-        include: [{ model: RolePermission }]
-    })
+        limit: limit,
+        offset: offset,
+    });
+    return {
+        total: count,
+        page,
+        limit,
+        totalPages: Math.ceil(count / limit),
+        data: rows
+    };
+}
+
+const selectDetailRole = async (role_id: string) => {
+    return await Role.findOne({
+        where: { id: role_id },
+        attributes: ["id", "name", "description"],
+        include: [{
+            model: Permission,
+            through: { attributes: [] },
+            attributes: ["id", "name", "description"]
+        }]
+    });
 }
 
 const updateRole = async (id: string, data: UpdateRoleDTO) => {
@@ -59,17 +87,6 @@ const assignPermissionsToRole = async (roleId: string, permissionIds: string[]) 
     }
 };
 
-const getPermissionsByRole = async (roleId: string) => {
-    return await Permission.findAll({
-        include: [{
-            model: RolePermission,
-            where: { role_id: roleId },
-            attributes: [],
-        }],
-        attributes: ["id", "name", "description"]
-    });
-};
-
 const removePermissionFromRole = async (roleId: string, permissionId: string) => {
     return await RolePermission.destroy({
         where: { role_id: roleId, permission_id: permissionId }
@@ -89,13 +106,13 @@ const removeRoleFromUser = async (userId: string, roleId: string) => {
 };
 
 export const RoleServices = {
-    createRole,
+    checkRole,
+    createNewRole,
     selectAllRoles,
-    selectRoleByName,
+    selectDetailRole,
     updateRole,
     deleteRole,
     assignPermissionsToRole,
-    getPermissionsByRole,
     removePermissionFromRole,
     assignRoleToUser,
     removeRoleFromUser

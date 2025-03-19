@@ -107,3 +107,42 @@ export const createRoleItems = [
         path: "/cau-hinh/phan-quyen-tai-khoan/tao-moi-vai-tro"
     }
 ]
+
+export const detailRoleItems = [
+    {
+        name: "Cấu hình"
+    },
+    {
+        name: "Phân quyền tài khoản",
+        path: "/cau-hinh/phan-quyen-tai-khoan"
+    },
+    {
+        name: "Chi tiết vai trò",
+    }
+]
+
+export const assignUserRoleItems = [
+    {
+        name: "Cấu hình"
+    },
+    {
+        name: "Phân quyền tài khoản",
+        path: "/cau-hinh/phan-quyen-tai-khoan"
+    },
+    {
+        name: "Gán quyền người dùng",
+    }
+]
+
+export const updateRoleItems = [
+    {
+        name: "Cấu hình"
+    },
+    {
+        name: "Phân quyền tài khoản",
+        path: "/cau-hinh/phan-quyen-tai-khoan"
+    },
+    {
+        name: "Cập nhật vai trò",
+    }
+]

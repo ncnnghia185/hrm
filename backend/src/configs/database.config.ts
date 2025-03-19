@@ -20,7 +20,7 @@ const sequelize = new Sequelize({
     username: envConfig.db.username,
     password: envConfig.db.password,
     dialect: envConfig.db.dialect,
-    host: envConfig.db.host,
+    host: envConfig.db.host || "postgres",
     port: envConfig.db.port,
     logging: false,
     models: [

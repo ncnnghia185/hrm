@@ -276,7 +276,7 @@
 
 /**
  * @swagger
- * /permissions/permission/{id}:
+ * /permissions/permission-info/{id}:
  *   get:
  *     tags:
  *       - permissions

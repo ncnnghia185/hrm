@@ -56,9 +56,8 @@ const LoginForm = () => {
                 />
                 <button
                   type="button"
-                  className={`absolute inset-y-0 right-3 flex items-center text-color ${
-                    errors.password ? "top-2" : errors.email ? "top-6" : "top-8"
-                  }`}
+                  className={`absolute inset-y-0 right-3 flex items-center text-color ${errors.password ? "top-2" : errors.email ? "top-7" : "top-8"
+                    }`}
                   onClick={togglePassword}
                 >
                   {showPassword ? (

@@ -1,5 +1,6 @@
 import BreadCrumb from "@/components/common/breadcrumb";
 import CreateButton from "@/components/common/button/createButton";
+import ListAllRoles from "@/components/template/role/listRole";
 import { listRoleItems } from "@/constant/breadCrumb";
 import { Metadata } from "next";
 import React from "react";
@@ -23,7 +24,9 @@ const AccountAuthorizarion = () => {
             label="Thêm vai trò"
           />
         </div>
-        <div className="w-[90%] md:w-[95%] h-[1px] border-b mt-2"></div>
+        <div className="flex-1 max-h-full h-full">
+          <ListAllRoles />
+        </div>
       </div>
     </div>
   );

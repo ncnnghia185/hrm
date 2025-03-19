@@ -1,63 +1,67 @@
 import { RoleServices } from "../../services/role/role.services";
 import { Request, Response } from "express";
 import { responseHandler } from "../../utils/response_handler";
-import { AppError } from "../../utils/custom_error";
 const checkRoleExists = async (name: string) => {
-    const role = await RoleServices.selectRoleByName(name);
+    const role = await RoleServices.checkRole(name);
     return role ? role : null;
 };
 // create new role
-const createNewRole = async (req: Request, res: Response) => {
+const createRole = async (req: Request, res: Response) => {
     try {
-        const { id, name, description } = req.body
+        const { id, name } = req.body.roleInfor
         if (!id || !name) {
-            responseHandler(res, false, 400, 2, "Thiếu các thông tin bắt buộc", null)
-            return
+            return responseHandler(res, false, 400, 2, "Thiếu các thông tin bắt buộc", null)
         }
         const existedRole = await checkRoleExists(name)
         if (existedRole) {
-            responseHandler(res, false, 409, 3, "Vai trò đã tồn tại", null)
-            return
+            return responseHandler(res, false, 409, 3, "Vai trò đã tồn tại", null)
         }
-        await RoleServices.createRole(req.body)
-        responseHandler(res, true, 201, 0, "Tạo mới vai trò thành công", null)
+        await RoleServices.createNewRole(req.body)
+        return responseHandler(res, true, 201, 0, "Tạo mới vai trò thành công", null)
     } catch (error) {
-        responseHandler(res, false, 500, 1, String(error), null)
-        return
+        return responseHandler(res, false, 500, 1, String(error), null)
     }
 }
 
 // get all roles
 const getAllRoles = async (req: Request, res: Response) => {
     try {
-        const allRoles = await RoleServices.selectAllRoles()
-        responseHandler(res, true, 200, 0, "Lấy các quyền thành công", allRoles)
-
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        const allRoles = await RoleServices.selectAllRoles(page, limit)
+        const allRolesData = {
+            roles: allRoles.data,
+            pagination: {
+                total: allRoles.total,
+                totalPages: allRoles.totalPages,
+                currentPage: allRoles.page,
+                pageSize: allRoles.limit,
+            }
+        }
+        return responseHandler(res, true, 200, 0, "Lấy các quyền thành công", allRolesData)
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Lỗi server", null)
-        return
+        return responseHandler(res, false, 500, 1, "Lỗi server", null)
     }
 }
 
-// get role by id
-const getRoleByName = async (req: Request, res: Response) => {
+// get detail role
+const getRoleDetail = async (req: Request, res: Response) => {
     try {
-        const { name } = req.params
-        const role = await RoleServices.selectRoleByName(name)
+        const { id } = req.params
+        const role = await RoleServices.selectDetailRole(id)
         if (!role) {
-            responseHandler(res, false, 404, 2, "Không tìm thấy vai trò này", null)
-            return
+            return responseHandler(res, false, 404, 2, "Không tìm thấy vai trò này", null)
         }
         return responseHandler(res, true, 200, 0, "Lấy thông tin vai trò thành công", role)
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Lỗi server", null)
-        return
+        return responseHandler(res, false, 500, 1, "Lỗi server", null)
     }
 }
 
 // update role
 const updateRole = async (req: Request, res: Response) => {
     try {
+        const { id } = req.params;
         const { name, description } = req.body
         const role = await checkRoleExists(name);
         if (!role) {
@@ -67,12 +71,10 @@ const updateRole = async (req: Request, res: Response) => {
         if (!name && !description) {
             return responseHandler(res, false, 400, 3, "Không có giá trị cập nhật mới", null);
         }
-        await RoleServices.updateRole(name, req.body)
+        await RoleServices.updateRole(id, req.body)
         return responseHandler(res, true, 201, 0, "Cập nhật vai trò thành công", null);
-
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Lỗi server", null)
-        return
+        return responseHandler(res, false, 500, 1, "Lỗi server", null)
     }
 }
 
@@ -87,8 +89,7 @@ const deleteRole = async (req: Request, res: Response) => {
         await RoleServices.deleteRole(name)
         return responseHandler(res, true, 201, 0, "Xóa vai trò thành công", null);
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Lỗi server", null)
-        return
+        return responseHandler(res, false, 500, 1, "Lỗi server", null)
     }
 }
 
@@ -97,42 +98,43 @@ const assignPermission = async (req: Request, res: Response) => {
         const { roleId } = req.params;
         const { permissionIds } = req.body;
         await RoleServices.assignPermissionsToRole(roleId, permissionIds);
-        responseHandler(res, true, 200, 0, "Gán quyền cho vai trò thành công", null)
+        return responseHandler(res, true, 200, 0, "Gán quyền cho vai trò thành công", null)
+
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Lỗi server", null)
-        return
+        return responseHandler(res, false, 500, 1, "Lỗi server", null)
     }
 }
 
-const getPermissionsByRole = async (req: Request, res: Response) => {
+const removePermissionFromRole = async (req: Request, res: Response) => {
     try {
-        const { roleId } = req.params;
-        const permissions = await RoleServices.getPermissionsByRole(roleId);
-        responseHandler(res, true, 200, 0, "Lấy các quyền thành công", permissions)
+        const { rId, pId } = req.params
+        await RoleServices.removePermissionFromRole(rId, pId);
+        return responseHandler(res, true, 200, 0, "Xóa quyền khỏi vai trò thành công", null)
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Lỗi server", null)
+        return responseHandler(res, false, 500, 1, String(error) || "Lỗi server", null)
     }
-};
+}
 
 const assignAccountRole = async (req: Request, res: Response) => {
     try {
         const { accountId, roleId } = req.body
         if (!accountId || !roleId) {
-            responseHandler(res, false, 404, 3, "Thiếu các thông tin bắt buộc", null)
+            return responseHandler(res, false, 404, 3, "Thiếu các thông tin bắt buộc", null)
         }
         await RoleServices.assignRoleToUser(accountId, roleId);
-        responseHandler(res, true, 200, 0, "Gán vai trò cho tài khoản thành công", null)
+        return responseHandler(res, true, 200, 0, "Gán vai trò cho tài khoản thành công", null)
+
     } catch (error) {
-        responseHandler(res, false, 500, 1, "Lỗi server", null)
+        return responseHandler(res, false, 500, 1, "Lỗi server", null)
     }
 }
 export const roleController = {
-    createNewRole,
+    createRole,
     getAllRoles,
-    getRoleByName,
+    getRoleDetail,
     updateRole,
     deleteRole,
     assignPermission,
-    getPermissionsByRole,
-    assignAccountRole
+    assignAccountRole,
+    removePermissionFromRole
 };

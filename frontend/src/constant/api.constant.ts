@@ -21,6 +21,12 @@ const DELETE_PERMISSION_ROUTE = (id: string) => `${BASE_URL}/permissions/delete-
 
 // ROLE API ROUTES
 const CREATE_ROLE_ROUTE = `${BASE_URL}/roles/create-role`
+const GET_ALL_ROLES_ROUTE = `${BASE_URL}/roles/all-roles`
+const GET_DETAIL_ROLE_ROUTE = (id: string) => `${BASE_URL}/roles/detail-role/${id}`
+const UPDATE_ROLE_ROUTE = (id: string) => `${BASE_URL}/roles/update-role/${id}`
+const ASSIGN_USER_ROLE_ROUTE = (id: string) => `${BASE_URL}/roles/update-role/${id}`
+const REMOVE_PERMISSION_ROLE_ROUTE = (roleId: string, permissionId: string) => `${BASE_URL}/roles/remove-permissions/${roleId}/${permissionId}`
+
 export const ROUTES = {
     // permission routes
     CREATE_PERMISSION_ROUTE,
@@ -33,11 +39,17 @@ export const ROUTES = {
     UPDATE_CHILD_PERMISSION_ROUTE,
     DELETE_PERMISSION_ROUTE,
     GET_MAIN_PERMISSION_INFO_ROUTE,
-    CREATE_ROLE_ROUTE,
-    // account rotes
+    // account routes
     LOGIN_ACCOUNT,
     LOGOUT_ACCOUNT,
     SEND_EMAIL_FORGOT_PASSWORD,
     CONFIRM_OTP_ROUTE,
-    FORGOT_PASSWORD_ROUTE
+    FORGOT_PASSWORD_ROUTE,
+    // role routes
+    CREATE_ROLE_ROUTE,
+    GET_ALL_ROLES_ROUTE,
+    GET_DETAIL_ROLE_ROUTE,
+    UPDATE_ROLE_ROUTE,
+    ASSIGN_USER_ROLE_ROUTE,
+    REMOVE_PERMISSION_ROLE_ROUTE
 }

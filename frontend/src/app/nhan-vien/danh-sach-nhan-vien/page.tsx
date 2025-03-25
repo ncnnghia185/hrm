@@ -1,6 +1,5 @@
 import BreadCrumb from "@/components/common/breadcrumb";
 import CreateButton from "@/components/common/button/createButton";
-import SearchBar from "@/components/common/search";
 import FilterAndSort from "@/components/template/employee/filterAndSort/smallScreen";
 import { listEmployeeItems } from "@/constant/breadCrumb";
 import { Metadata } from "next";

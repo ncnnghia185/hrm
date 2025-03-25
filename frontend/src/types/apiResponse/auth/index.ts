@@ -36,3 +36,10 @@ export type ForgotPasswordResponse = {
     errCode: number,
     message: string;
 }
+
+export type RefreshTokenResponse = {
+    success: boolean;
+    errCode: number;
+    message: string;
+    data: string
+}

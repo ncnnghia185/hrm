@@ -8,6 +8,8 @@ import { comparePassword, hashPassword } from "../../utils/hash_password";
 import { generateRandomId } from "../../utils/generate_id";
 import sendResetPasswordEmail from "../../configs/nodemailer.config";
 import sequelize from "../../configs/database.config";
+import jwt from "jsonwebtoken";
+import configEnv from "../../configs/env.config";
 
 const createNewAccount = async (req: Request, res: Response) => {
     try {
@@ -29,7 +31,6 @@ const createNewAccount = async (req: Request, res: Response) => {
         return;
     }
 }
-
 
 const loginAccount = async (req: Request, res: Response) => {
     try {
@@ -198,11 +199,54 @@ const forgotPassword = async (req: Request, res: Response) => {
         responseHandler(res, false, 500, 1, String(error), null);
     }
 }
+
+const refreshToken = async (req: Request, res: Response) => {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+        return responseHandler(res, false, 400, 2, "Missing refresh token", null);
+    }
+    try {
+        const decoded = jwt.verify(refreshToken, configEnv.jwt_secret) as { id: string };
+        console.log("check decoded", decoded)
+        const storedToken = await RefreshToken.findOne({ where: { account_id: decoded.id, token: refreshToken } });
+        if (!storedToken || storedToken.expires_at < new Date()) {
+            return responseHandler(res, false, 401, 3, "Refresh token hết hạn hoặc không đúng", null);
+        }
+        const user = await Account.findOne({
+            where: { id: decoded.id },
+            include: [
+                {
+                    model: Role,
+                    as: "roles",
+                    include: [
+                        {
+                            model: Permission,
+                            as: "permissions",
+                            attributes: ["name"],
+                            through: { attributes: [] }
+                        }
+                    ]
+                }
+            ]
+        });
+        if (user) {
+            const roles = user.roles ? user.roles.map((role: any) => role.name) : [];
+            const permissions = user.roles
+                .flatMap((role: any) => role.permissions.map((perm: any) => perm.name))
+                .filter((value: any, index: any, self: any) => self.indexOf(value) === index);
+            const accessToken = generateAccessToken(user.id, roles, permissions);
+            return responseHandler(res, true, 200, 0, "Refresh token thành công", accessToken);
+        }
+    } catch (error) {
+        return responseHandler(res, false, 500, 1, String(error), null);
+    }
+}
 export const accountController = {
     createNewAccount,
     loginAccount,
     logoutAccount,
     sendMailChangePassword,
     confirmOTPForgotPassword,
-    forgotPassword
+    forgotPassword,
+    refreshToken
 }

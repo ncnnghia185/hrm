@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
 import { Employee } from '../employee/employee.model';
+import { Position } from '../position/position.model';
 
 @Table({
     tableName: 'departments',
@@ -27,4 +28,7 @@ export class Department extends Model<Department> {
 
     @HasMany(() => Employee)
     employees!: Employee[];
+
+    @HasMany(() => Position)
+    positions!: Position[];
 }

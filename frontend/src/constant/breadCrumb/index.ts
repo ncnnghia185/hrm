@@ -146,3 +146,27 @@ export const updateRoleItems = [
         name: "Cập nhật vai trò",
     }
 ]
+
+export const departmentManageItems = [
+    {
+        name: "Nhân viên"
+    },
+    {
+        name: "Quản lý phòng ban",
+        path: "/nhan-vien/quan-ly-phong-ban"
+    }
+]
+
+export const createDepartmentItems = [
+    {
+        name: "Nhân viên"
+    },
+    {
+        name: "Quản lý phòng ban",
+        path: "/nhan-vien/quan-ly-phong-ban"
+    },
+    {
+        name: "Tạo mới phòng ban",
+        path: "/nhan-vien/quan-ly-phong-ban/tao-moi-phong-ban"
+    }
+]

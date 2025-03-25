@@ -6,6 +6,7 @@ const LOGOUT_ACCOUNT = `${BASE_URL}/account/logout-account`
 const SEND_EMAIL_FORGOT_PASSWORD = `${BASE_URL}/account//send-reset-password-email`
 const CONFIRM_OTP_ROUTE = `${BASE_URL}/account/confirm-otp`
 const FORGOT_PASSWORD_ROUTE = `${BASE_URL}/account/forgot-password`
+const REFRESHTOKEN_ROUTE = `${BASE_URL}/account/refresh-token`
 
 // PERMISSION API ROUTES
 const CREATE_PERMISSION_ROUTE = `${BASE_URL}/permissions/create-permission`
@@ -27,7 +28,13 @@ const UPDATE_ROLE_ROUTE = (id: string) => `${BASE_URL}/roles/update-role/${id}`
 const ASSIGN_USER_ROLE_ROUTE = (id: string) => `${BASE_URL}/roles/update-role/${id}`
 const REMOVE_PERMISSION_ROLE_ROUTE = (roleId: string, permissionId: string) => `${BASE_URL}/roles/remove-permissions/${roleId}/${permissionId}`
 
+// DEPARTMENT API ROUTES
+const CREATE_DEPARTMENT_ROUTE = `${BASE_URL}/departments/create-department`
+const GET_ALL_DEPARTMENTS_ROUTE = `${BASE_URL}/departments/all-departments`
+
 export const ROUTES = {
+    // base url
+    BASE_URL,
     // permission routes
     CREATE_PERMISSION_ROUTE,
     CREATE_CHILD_PERMISSION_ROUTE,
@@ -45,11 +52,15 @@ export const ROUTES = {
     SEND_EMAIL_FORGOT_PASSWORD,
     CONFIRM_OTP_ROUTE,
     FORGOT_PASSWORD_ROUTE,
+    REFRESHTOKEN_ROUTE,
     // role routes
     CREATE_ROLE_ROUTE,
     GET_ALL_ROLES_ROUTE,
     GET_DETAIL_ROLE_ROUTE,
     UPDATE_ROLE_ROUTE,
     ASSIGN_USER_ROLE_ROUTE,
-    REMOVE_PERMISSION_ROLE_ROUTE
+    REMOVE_PERMISSION_ROLE_ROUTE,
+    // department routes
+    CREATE_DEPARTMENT_ROUTE,
+    GET_ALL_DEPARTMENTS_ROUTE
 }

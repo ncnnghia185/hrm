@@ -1,5 +1,6 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { Employee } from '../employee/employee.model';
+import { Department } from '../department/department.model';
 
 @Table({
     tableName: 'position',
@@ -24,6 +25,16 @@ export class Position extends Model<Position> {
         allowNull: true,
     })
     description!: string;
+
+    @ForeignKey(() => Department)
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+    })
+    departmentId!: string;
+
+    @BelongsTo(() => Department)
+    department!: Department;
 
     @HasMany(() => Employee)
     employees!: Employee[];

@@ -17,7 +17,7 @@ const sidebarItems: SidebarItemType[] = [
         children: [
             { name: "Danh sách nhân viên", path: "/nhan-vien/danh-sach-nhan-vien" },
             { name: "Hồ sơ cá nhân", path: "#" },
-            { name: "Phòng ban & chức vụ", path: "#" },
+            { name: "Quản lý phòng ban", path: "/nhan-vien/quan-ly-phong-ban" },
             { name: "Hợp đồng lao động", path: "#" },
             { name: "Lương & phúc lợi", path: "#" }
         ]

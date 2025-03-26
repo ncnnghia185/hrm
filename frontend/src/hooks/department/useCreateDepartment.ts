@@ -24,7 +24,7 @@ export const useCreateDepartment = () => {
                 router.push("/nhan-vien/quan-ly-phong-ban")
             }
         } catch (error) {
-            toast.error("Có lỗi xảy ra khi tạo quyền");
+            toast.error("Thêm mới phòng ban thất bại");
         } finally {
             setLoading(false);
         }

@@ -31,7 +31,7 @@ export class Position extends Model<Position> {
         type: DataType.STRING(255),
         allowNull: false,
     })
-    departmentId!: string;
+    department_id!: string;
 
     @BelongsTo(() => Department)
     department!: Department;

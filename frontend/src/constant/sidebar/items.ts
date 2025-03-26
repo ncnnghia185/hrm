@@ -18,6 +18,7 @@ const sidebarItems: SidebarItemType[] = [
             { name: "Danh sách nhân viên", path: "/nhan-vien/danh-sach-nhan-vien" },
             { name: "Hồ sơ cá nhân", path: "#" },
             { name: "Quản lý phòng ban", path: "/nhan-vien/quan-ly-phong-ban" },
+            { name: "Quản lý chức vụ", path: "/nhan-vien/quan-ly-chuc-vu" },
             { name: "Hợp đồng lao động", path: "#" },
             { name: "Lương & phúc lợi", path: "#" }
         ]

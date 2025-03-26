@@ -170,3 +170,27 @@ export const createDepartmentItems = [
         path: "/nhan-vien/quan-ly-phong-ban/tao-moi-phong-ban"
     }
 ]
+
+export const positionManageItems = [
+    {
+        name: "Nhân viên"
+    },
+    {
+        name: "Quản lý chức vụ",
+        path: "/nhan-vien/quan-ly-chuc-vu"
+    }
+]
+
+export const createPositionItems = [
+    {
+        name: "Nhân viên"
+    },
+    {
+        name: "Quản lý chức vụ",
+        path: "/nhan-vien/quan-ly-chuc-vu"
+    },
+    {
+        name: "Tạo mới chức vụ",
+        path: "/nhan-vien/quan-ly-chuc-vu/tao-moi-chuc-vu"
+    }
+]

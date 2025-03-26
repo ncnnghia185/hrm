@@ -7,7 +7,7 @@ import { useLogin } from "../../../hooks/auth/login/useLogin";
 import { generateId } from "@/utils/generateUUID";
 const LoginForm = () => {
   const refreshTokenId = generateId("RTI");
-  const { showPassword, togglePassword, LoginSchema, handleSubmit, loading } =
+  const { showPassword, togglePassword, LoginSchema, handleSubmit, loading, accountData } =
     useLogin(refreshTokenId);
   return (
     <div className="w-full flex items-center justify-center mt-4 relative">
@@ -56,7 +56,7 @@ const LoginForm = () => {
                 />
                 <button
                   type="button"
-                  className={`absolute inset-y-0 right-3 flex items-center text-color ${errors.password ? "top-2" : errors.email ? "top-7" : "top-8"
+                  className={`absolute inset-y-0 right-3 flex items-center text-color ${errors.password ? "top-2" : errors.email ? "top-7" : accountData && accountData.email ? "top-7" : "top-8"
                     }`}
                   onClick={togglePassword}
                 >

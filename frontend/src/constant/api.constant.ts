@@ -32,6 +32,10 @@ const REMOVE_PERMISSION_ROLE_ROUTE = (roleId: string, permissionId: string) => `
 const CREATE_DEPARTMENT_ROUTE = `${BASE_URL}/departments/create-department`
 const GET_ALL_DEPARTMENTS_ROUTE = `${BASE_URL}/departments/all-departments`
 
+
+// POSITION API ROUTES
+const CREATE_POSITION_ROUTE = `${BASE_URL}/positions/create-position`
+const GET_ALL_POSITIONS_ROUTE = `${BASE_URL}/positions/all-positions`
 export const ROUTES = {
     // base url
     BASE_URL,
@@ -62,5 +66,8 @@ export const ROUTES = {
     REMOVE_PERMISSION_ROLE_ROUTE,
     // department routes
     CREATE_DEPARTMENT_ROUTE,
-    GET_ALL_DEPARTMENTS_ROUTE
+    GET_ALL_DEPARTMENTS_ROUTE,
+    // position routes
+    CREATE_POSITION_ROUTE,
+    GET_ALL_POSITIONS_ROUTE,
 }

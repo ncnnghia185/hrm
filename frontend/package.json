@@ -17,6 +17,7 @@
     "@tiptap/starter-kit": "^2.11.5",
     "@types/js-cookie": "^3.0.6",
     "axios": "^1.7.9",
+    "clsx": "2.1.1",
     "dotenv": "^16.4.7",
     "formik": "^2.4.6",
     "framer-motion": "^12.5.0",
@@ -36,6 +37,8 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@casl/ability": "^6.7.3",
+    "@casl/react": "^5.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

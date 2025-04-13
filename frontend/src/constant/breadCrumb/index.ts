@@ -194,3 +194,55 @@ export const createPositionItems = [
         path: "/nhan-vien/quan-ly-chuc-vu/tao-moi-chuc-vu"
     }
 ]
+
+export const contractManageItems = [
+    {
+        name: "Nhân viên"
+    },
+    {
+        name: "Phân loại hợp đồng",
+        path: "/nhan-vien/quan-ly-loai-hop-dong"
+    }
+]
+
+export const createContractItems = [
+    {
+        name: "Nhân viên"
+    },
+    {
+        name: "Phân loại hợp đồng",
+        path: "/nhan-vien/quan-ly-loai-hop-dong"
+    },
+    {
+        name: "Tạo mới loại hợp đồng",
+        path: "/nhan-vien/quan-ly-loai-hop-dong/tao-moi-loai-hop-dong"
+    }
+]
+
+export const detailContractItems = [
+    {
+        name: "Nhân viên"
+    },
+    {
+        name: "Phân loại hợp đồng",
+        path: "/nhan-vien/quan-ly-loai-hop-dong"
+    },
+    {
+        name: "Chi tiết loại hợp đồng",
+        path: "/nhan-vien/quan-ly-loai-hop-dong/chi-tiet-loai-hop-dong"
+    }
+]
+
+export const updateContractItems = [
+    {
+        name: "Nhân viên"
+    },
+    {
+        name: "Quản lý loại hợp đồng",
+        path: "/nhan-vien/quan-ly-loai-hop-dong"
+    },
+    {
+        name: "Cập nhật loại hợp đồng",
+        path: "/nhan-vien/quan-ly-loai-hop-dong/cap-nhat-loai-hop-dong"
+    }
+]

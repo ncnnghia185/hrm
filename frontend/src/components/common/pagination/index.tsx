@@ -35,11 +35,10 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         key={index}
         onClick={() => typeof page === "number" && onPageChange(page)}
-        className={`w-6 h-6 md:w-8 md:h-8 border rounded-lg bg-color text-color ${
-          currentPage === page
+        className={`w-6 h-6 md:w-8 md:h-8 border rounded-lg bg-color text-color ${currentPage === page
             ? "bg-blue-500 dark:bg-blue-700 text-white"
             : "hover:bg-[#64748B]"
-        }`}
+          }`}
         disabled={typeof page !== "number"}
       >
         {page}
@@ -65,7 +64,7 @@ const Pagination: React.FC<PaginationProps> = ({
         >
           {selectItemPerPage.map((size) => (
             <option key={size} value={size}>
-              {size}
+              {size} dòng/trang
             </option>
           ))}
         </select>

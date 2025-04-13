@@ -5,14 +5,15 @@ import {
     AccountRole,
     Role,
     RolePermission,
-    Contract,
+    ContractTemplate,
     Department,
     Employee,
     FailedLogin,
     PasswordReset,
     Permission,
     Position,
-    RefreshToken
+    RefreshToken,
+    EmployeeContract
 } from "../models/index";
 
 const sequelize = new Sequelize({
@@ -28,14 +29,16 @@ const sequelize = new Sequelize({
         AccountRole,
         RolePermission,
         Account,
-        Contract,
+        ContractTemplate,
         Department,
         Employee,
         FailedLogin,
         PasswordReset,
         Permission,
         Position,
-        RefreshToken]
+        RefreshToken,
+        EmployeeContract
+    ]
 })
 
 export default sequelize

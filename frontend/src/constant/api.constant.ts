@@ -32,10 +32,18 @@ const REMOVE_PERMISSION_ROLE_ROUTE = (roleId: string, permissionId: string) => `
 const CREATE_DEPARTMENT_ROUTE = `${BASE_URL}/departments/create-department`
 const GET_ALL_DEPARTMENTS_ROUTE = `${BASE_URL}/departments/all-departments`
 
-
 // POSITION API ROUTES
 const CREATE_POSITION_ROUTE = `${BASE_URL}/positions/create-position`
 const GET_ALL_POSITIONS_ROUTE = `${BASE_URL}/positions/all-positions`
+
+// CONTRACT API ROUTES
+const CREATE_CONTRACT_ROUTE = `${BASE_URL}/contracts/create-contract`
+const GET_ALL_CONTRACTS_ROUTE = `${BASE_URL}/contracts/all-contracts`
+const GET_DETAIL_CONTRACT_ROUTE = (id: string) => `${BASE_URL}/contracts/detail-contract/${id}`
+const UPDATE_CONTRACT_ROUTE = (id: string) => `${BASE_URL}/contracts/update-contract/${id}`
+const UPDATE_CONTRACT_STATUS_ROUTE = (id: string) => `${BASE_URL}/contracts/update-contract-status/${id}`
+const DELETE_CONTRACT_ROUTE = (id: string) => `${BASE_URL}/contracts/delete-contract/${id}`
+const GET_CONTRACT_BY_EMPLOYEE_ROUTE = (employeeId: string) => `${BASE_URL}/contracts/contract-of-employee/${employeeId}`
 export const ROUTES = {
     // base url
     BASE_URL,
@@ -70,4 +78,12 @@ export const ROUTES = {
     // position routes
     CREATE_POSITION_ROUTE,
     GET_ALL_POSITIONS_ROUTE,
+    // contract routes
+    CREATE_CONTRACT_ROUTE,
+    GET_ALL_CONTRACTS_ROUTE,
+    GET_DETAIL_CONTRACT_ROUTE,
+    UPDATE_CONTRACT_ROUTE,
+    UPDATE_CONTRACT_STATUS_ROUTE,
+    DELETE_CONTRACT_ROUTE,
+    GET_CONTRACT_BY_EMPLOYEE_ROUTE,
 }

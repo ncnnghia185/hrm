@@ -19,7 +19,7 @@ const sidebarItems: SidebarItemType[] = [
             { name: "Hồ sơ cá nhân", path: "#" },
             { name: "Quản lý phòng ban", path: "/nhan-vien/quan-ly-phong-ban" },
             { name: "Quản lý chức vụ", path: "/nhan-vien/quan-ly-chuc-vu" },
-            { name: "Hợp đồng lao động", path: "#" },
+            { name: "Phân loại hợp đồng", path: "/nhan-vien/quan-ly-loai-hop-dong" },
             { name: "Lương & phúc lợi", path: "#" }
         ]
     },

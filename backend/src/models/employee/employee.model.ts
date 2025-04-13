@@ -2,7 +2,7 @@ import { Table, Column, Model, DataType, ForeignKey, BelongsTo, HasOne } from 's
 import { Account } from '../account/account.model';
 import { Department } from '../department/department.model';
 import { Position } from '../position/position.model';
-import { Contract } from '../contract/contract.model';
+import { EmployeeContract } from '../contract/employee_contract.model';
 
 @Table({
     tableName: 'employee',
@@ -70,6 +70,6 @@ export class Employee extends Model<Employee> {
     @BelongsTo(() => Position)
     position!: Position;
 
-    @HasOne(() => Contract)
-    contract!: Contract;
+    @HasOne(() => EmployeeContract)
+    contract!: EmployeeContract;
 }
